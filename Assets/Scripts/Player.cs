@@ -6,18 +6,18 @@ public class Player : MonoBehaviour
 {
     [Header("Movimiento")]
     public float speed;
-    private float directionX;
-    private float directionZ;
+    public Rigidbody rb;
+    public Vector3 movement;
+    public Transform playerMesh;
 
     [Header("Vida")]
     public float vida;
     private float maxVida;
-    //private float vidaRobada;
 
 
     [Header("Desplazamiento")]
     public bool dash;
-    public float dashTime;
+    public float dashCooldown;
     public float speedDash;
 
     [Header("AtaqueCombo")]
@@ -41,8 +41,7 @@ public class Player : MonoBehaviour
     public int AttackDmgCargado = 5;
     private float lastClickedTimeDos = 0;
 
-    [Header("Extra")]
-    public Rigidbody rb;
+    //[Header("Extra")]
 
 
     [Header("VFX")]
@@ -54,26 +53,21 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-
+        rb = this.GetComponent<Rigidbody>();
     }
 
 
     void Update()
     {
-        Movimiento();
-        Dash();
-        
-        /*
-        if (Input.GetKeyDown(KeyCode.J))
+        movement = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+
+        dashCooldown -= Time.deltaTime;
+
+        if (Input.GetKeyDown(KeyCode.Space) && dashCooldown <= 0f)
         {
-            cooldowntime = 1 * Time.time;
-            if (cooldowntime > nextFireTime)
-            {
-                AttackCombo();
-            }
+            dash = true;
         }
-        */
-        
+
         AttackCombo();
 
         if (Time.time - lastClickedTime > maxComboDelay)
@@ -93,42 +87,54 @@ public class Player : MonoBehaviour
         {
 
         }
+    }
+
+    void FixedUpdate()
+    {
+        Movimiento(movement);
+        if (dash)
+        {
+            //Dash();
+            StartCoroutine(Dash());
+        }
         
     }
-    private void Movimiento()
-    {
-        directionX = Input.GetAxis("Horizontal");
-        directionZ = Input.GetAxis("Vertical");
 
-        transform.position += new Vector3(directionX * speed * Time.deltaTime, 0, directionZ * speed * Time.deltaTime);
-    }
-    private void Dash()
+    public void Movimiento(Vector3 direction)
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        rb.MovePosition(transform.position + (direction * speed * Time.deltaTime));
+        playerMesh.rotation = Quaternion.LookRotation(movement);
+    }
+    /*
+    public void Dash()
+    {
+        rb.AddForce(transform.forward * speedDash, ForceMode.Impulse);
+        dashCooldown = 2;
+        dash = false;
+        
+    
+        if (rb.position.x < 0f && Input.GetKeyDown(KeyCode.Space) && dashCooldown <= 0f)
         {
-            dashTime += 1 * Time.deltaTime;
-            if(dashTime < 1)
-            {
-                dash = true;
-                if(directionX < 0)
-                    transform.Translate(Vector3.left * speedDash * Time.fixedDeltaTime);
-                else if (directionX > 0)
-                    transform.Translate(Vector3.right * speedDash * Time.fixedDeltaTime);
-                else if (directionZ < 0)
-                    transform.Translate(Vector3.back * speedDash * Time.fixedDeltaTime);
-                else if (directionZ > 0)
-                    transform.Translate(Vector3.forward * speedDash * Time.fixedDeltaTime);
-            }
-            else
-            {
-                dash = false;
-            }
+            rb.AddForce( movement * -speedDash, ForceMode.Impulse);
         }
-        else
+        if (rb.position.z >= 0f && Input.GetKeyDown(KeyCode.Space) && dashCooldown <= 0f)
         {
-            dash = false;
-            dashTime = 0;
+            rb.AddForce( movement * speedDash, ForceMode.Impulse);
         }
+        if (rb.position.z < 0f && Input.GetKeyDown(KeyCode.Space) && dashCooldown <= 0f)
+        {
+            rb.AddForce( movement * -speedDash, ForceMode.Impulse);
+        }
+    }*/
+
+
+    IEnumerator Dash()
+    {
+        rb.AddForce(transform.forward * speedDash, ForceMode.Impulse);
+        dashCooldown = 2;
+        dash = false;
+        yield return new WaitForSecondsRealtime(0.3f);
+        rb.velocity = new Vector3(0,0,0);
     }
 
     private void AttackCombo()

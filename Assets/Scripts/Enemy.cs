@@ -10,13 +10,20 @@ public class Enemy : MonoBehaviour
     public int vida;
 
     [Header("Following")]
-    [SerializeField] private float speed;
+    public float speed;
     public Transform ObjetoASeguir;
-    
+    public bool playerOnRange;
 
-    [Header("Ataque")]
-    [SerializeField] private float ataqueNormal;
-    [SerializeField] private float mordisco;
+    [Header("RangoDeAtaque")]
+    public GameObject rangoAtaque;
+
+    [Header("AtaqueBasico")]
+    public float ataqueNormalDMG;
+    public GameObject basicoGO;
+
+    [Header("Mordisco")]
+    public float mordiscoDMG;
+    public GameObject mordiscoGO;
 
     void Start()
     {
@@ -33,6 +40,15 @@ public class Enemy : MonoBehaviour
     {
         transform.position = Vector3.MoveTowards(transform.position, ObjetoASeguir.transform.position, speed * Time.deltaTime);
         transform.forward = ObjetoASeguir.position - transform.position;
+        if(playerOnRange == true)
+        {
+            speed = 0f;
+            activator();
+        }
+        else if (playerOnRange == false)
+        {
+            speed = 1f;
+        }
     }
 
     private void Muerte()
@@ -44,58 +60,58 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public void activator()
+    {
+        switch(Random.Range(0,2))
+        {
+            case 0: StartCoroutine(AtaqueBasico());
+                break;
+            case 1: StartCoroutine(Mordisco());
+                break;
+        }
+    }
+
+    IEnumerator AtaqueBasico()
+    {
+        yield return new WaitForSecondsRealtime(1f);
+        basicoGO.SetActive(true);
+        yield return new WaitForSecondsRealtime(0.2f);
+        basicoGO.SetActive(false);
+    }
+
+    IEnumerator Mordisco()
+    {
+        yield return new WaitForSecondsRealtime(1f);
+        mordiscoGO.SetActive(true);
+        yield return new WaitForSecondsRealtime(0.2f);
+        mordiscoGO.SetActive(false);
+    }
+
     private void OnTriggerEnter(Collider collider)
     {
         if (collider.gameObject.CompareTag("AtaqueUno"))
         {
             vida -= plyr.AttackDmgUno;  // Disminuira cierta cantidad de vida cada que sea golpeado por el primer ataque.
-            
-            /*
-            if (vida <= 0)
-            {
-                GameObject obj = Instantiate(deathVFX);  //Efectos visuales dsp de morir
-                obj.transform.position = transform.position;
-            }
-            */
         }
 
         if (collider.gameObject.CompareTag("AtaqueDos"))
         {
             vida -= plyr.AttackDmgDos;  // Disminuira cierta cantidad de vida cada que sea golpeado por el primer ataque.
-
-            /*
-            if (vida <= 0)
-            {
-                GameObject obj = Instantiate(deathVFX);  //Efectos visuales dsp de morir
-                obj.transform.position = transform.position;
-            }
-            */
         }
 
         if (collider.gameObject.CompareTag("AtaqueTres"))
         {
             vida -= plyr.AttackDmgTres;  // Disminuira cierta cantidad de vida cada que sea golpeado por el primer ataque.
-
-            /*
-            if (vida <= 0)
-            {
-                GameObject obj = Instantiate(deathVFX);  //Efectos visuales dsp de morir
-                obj.transform.position = transform.position;
-            }
-            */
         }
 
         if (collider.gameObject.CompareTag("AtaqueCargado"))
         {
             vida -= plyr.AttackDmgCargado;  // Disminuira cierta cantidad de vida cada que sea golpeado por el primer ataque.
-
-            /*
-            if (vida <= 0)
-            {
-                GameObject obj = Instantiate(deathVFX);  //Efectos visuales dsp de morir
-                obj.transform.position = transform.position;
-            }
-            */
         }
+    }
+
+    public void NumAlea()
+    {
+        int numalea = Random.Range(1,2);
     }
 }

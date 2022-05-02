@@ -14,15 +14,12 @@ public class Player : MonoBehaviour
     public float vida;
     private float maxVida;
 
-
     [Header("Desplazamiento")]
     public bool dash;
     public float dashCooldown;
     public float speedDash;
 
     [Header("AtaqueCombo")]
-    [SerializeField] private float cooldowntime = 0f;
-    [SerializeField] private float nextFireTime = 1f;
     [SerializeField] private int numberOfClicks = 0;
     private float lastClickedTime = 0;
     private float maxComboDelay = 0.8f;
@@ -32,30 +29,28 @@ public class Player : MonoBehaviour
     public GameObject ataqueUnoGO;
     public GameObject ataqueDosGO;
     public GameObject ataqueTresGO;
+    public bool attackCombo = false;
+    public float attackCooldown = 0.25f;
+    private float timePressed = 0.9f;
 
     [Header("AtaqueCargado")]
     [SerializeField] private float radio = 5f;
-    private float tiempo = 2f;
     public GameObject ataqueCargGO;
-    private float attackChargedDelay = 5f;
     public int AttackDmgCargado = 5;
-    private float lastClickedTimeDos = 0;
+    public bool attackCharged = false;
 
-    //[Header("Extra")]
-
+    [Header("Extra")]
+    [SerializeField] private Enemy enmy;
 
     [Header("VFX")]
     public GameObject ataqueUno;
     public GameObject ataqueDos;
     public GameObject ataqueTres;
 
-
-
     void Start()
     {
         rb = this.GetComponent<Rigidbody>();
     }
-
 
     void Update()
     {
@@ -68,7 +63,24 @@ public class Player : MonoBehaviour
             dash = true;
         }
 
-        AttackCombo();
+        attackCooldown -= Time.deltaTime;
+
+        Debug.Log(timePressed);
+
+        if (Input.GetKey(KeyCode.J))
+        {
+            timePressed -= Time.deltaTime;
+        }
+        if (timePressed >= 0 && Input.GetKeyUp(KeyCode.J))
+        {
+            attackCombo = true;
+            attackCharged = false;
+        }
+        if (timePressed < 0 && Input.GetKeyUp(KeyCode.J))
+        {
+            attackCombo = false;
+            attackCharged = true;
+        }
 
         if (Time.time - lastClickedTime > maxComboDelay)
         {
@@ -80,13 +92,6 @@ public class Player : MonoBehaviour
             ataqueDos.SetActive(false);
             ataqueTres.SetActive(false);
         }
-        
-        AttackCharged();
-
-        if (Time.time - lastClickedTimeDos > attackChargedDelay)
-        {
-
-        }
     }
 
     void FixedUpdate()
@@ -97,7 +102,18 @@ public class Player : MonoBehaviour
             //Dash();
             StartCoroutine(Dash());
         }
-        
+
+        if (attackCombo)
+        {
+            AttackCombo();
+            timePressed = 0.9f;
+        }
+
+        if (attackCharged){
+            StartCoroutine(AttackingCharg());
+            timePressed = 0.9f;
+        }
+        Quieto();
     }
 
     public void Movimiento(Vector3 direction)
@@ -105,28 +121,6 @@ public class Player : MonoBehaviour
         rb.MovePosition(transform.position + (direction * speed * Time.deltaTime));
         playerMesh.rotation = Quaternion.LookRotation(movement);
     }
-    /*
-    public void Dash()
-    {
-        rb.AddForce(transform.forward * speedDash, ForceMode.Impulse);
-        dashCooldown = 2;
-        dash = false;
-        
-    
-        if (rb.position.x < 0f && Input.GetKeyDown(KeyCode.Space) && dashCooldown <= 0f)
-        {
-            rb.AddForce( movement * -speedDash, ForceMode.Impulse);
-        }
-        if (rb.position.z >= 0f && Input.GetKeyDown(KeyCode.Space) && dashCooldown <= 0f)
-        {
-            rb.AddForce( movement * speedDash, ForceMode.Impulse);
-        }
-        if (rb.position.z < 0f && Input.GetKeyDown(KeyCode.Space) && dashCooldown <= 0f)
-        {
-            rb.AddForce( movement * -speedDash, ForceMode.Impulse);
-        }
-    }*/
-
 
     IEnumerator Dash()
     {
@@ -139,91 +133,92 @@ public class Player : MonoBehaviour
 
     private void AttackCombo()
     {
-        if (Input.GetKeyDown(KeyCode.J))
+        lastClickedTime = Time.time;
+        numberOfClicks++;
+
+        if (numberOfClicks == 1 && attackCooldown <=0)
         {
-            cooldowntime = 1 * Time.time;
-            if (cooldowntime > nextFireTime)
-            {
-                lastClickedTime = Time.time;
-                cooldowntime *= 0;
-                numberOfClicks++;
-
-                if (numberOfClicks == 1)
-                {
-                    ataqueUnoGO.SetActive(true);
-                    ataqueDosGO.SetActive(false);
-                    ataqueTresGO.SetActive(false);
-                    ataqueUno.SetActive(true);
-                    ataqueDos.SetActive(false);
-                    ataqueTres.SetActive(false);
-                }
-                //numberOfClicks = Mathf.Clamp(numberOfClicks, 0, 3);
-
-                if (numberOfClicks == 2)
-                {
-                    ataqueUnoGO.SetActive(false);
-                    ataqueDosGO.SetActive(true);
-                    ataqueTresGO.SetActive(false);
-                    ataqueUno.SetActive(false);
-                    ataqueDos.SetActive(true);
-                    ataqueTres.SetActive(false);
-                }
-
-                if (numberOfClicks == 3)
-                {
-                    ataqueUnoGO.SetActive(false);
-                    ataqueDosGO.SetActive(false);
-                    ataqueTresGO.SetActive(true);
-                    ataqueUno.SetActive(false);
-                    ataqueDos.SetActive(false);
-                    ataqueTres.SetActive(true);
-                    numberOfClicks = 0;
-                }
-            }
+            ataqueUnoGO.SetActive(true);
+            ataqueDosGO.SetActive(false);
+            ataqueTresGO.SetActive(false);
+            ataqueUno.SetActive(true);
+            ataqueDos.SetActive(false);
+            ataqueTres.SetActive(false);
+            attackCooldown = 0.25f;
         }
-        
+        numberOfClicks = Mathf.Clamp(numberOfClicks, 0, 3);
+
+        if (numberOfClicks == 2 && attackCooldown <= 0)
+        {
+            ataqueUnoGO.SetActive(false);
+            ataqueDosGO.SetActive(true);
+            ataqueTresGO.SetActive(false);
+            ataqueUno.SetActive(false);
+            ataqueDos.SetActive(true);
+            ataqueTres.SetActive(false);
+            attackCooldown = 0.25f;
+        }
+
+        if (numberOfClicks == 3 && attackCooldown <= 0)
+        {
+            ataqueUnoGO.SetActive(false);
+            ataqueDosGO.SetActive(false);
+            ataqueTresGO.SetActive(true);
+            ataqueUno.SetActive(false);
+            ataqueDos.SetActive(false);
+            ataqueTres.SetActive(true);
+            attackCooldown = 0.25f;
+            numberOfClicks = 0;
+        }
+        attackCombo = false;
     }
 
-    private void AttackCharged()
-    {
-        
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            StartCoroutine(AttackingCharg());
-            /*
-            CuentaAtras();
-            lastClickedTimeDos = Time.time;
-            Debug.Log(tiempo);
-            if (tiempo < 0)
-            {
-                Destroy(this);
-            }
-            */
-        }
-        
-        //ataqueCargGO.SetActive(true);
-    }
     IEnumerator AttackingCharg()
     {
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 5; i++)
         {
             ataqueCargGO.SetActive(true);
-
-            yield return new WaitForSecondsRealtime(0.3f);
-
+            yield return new WaitForSecondsRealtime(0.5f);
             ataqueCargGO.SetActive(false);
-
         }
+        attackCharged = false;
     }
 
-    public void CuentaAtras()
+    private void Quieto()
     {
-        tiempo -= Time.deltaTime;
+        if(Input.GetKeyUp(KeyCode.W) && Input.GetKeyUp(KeyCode.A) && Input.GetKeyUp(KeyCode.S) && Input.GetKeyUp(KeyCode.D))
+        {
+            rb.velocity = new Vector3(0, 0, 0);
+        }
+
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, radio);
+    }
+
+    private void OnTriggerEnter(Collider collider)
+    {
+        if (collider.gameObject.CompareTag("RangoAtaqueEnemy1"))
+        {
+            enmy.playerOnRange = true;
+        }
+        if (collider.gameObject.CompareTag("AtaqueNormalEnemy1"))
+        {
+            vida -= enmy.ataqueNormalDMG;
+        }
+        if (collider.gameObject.CompareTag("MordiscoEnemy1"))
+        {
+            vida -= enmy.mordiscoDMG;
+        }
+    }
+    private void OnTriggerExit(Collider collider)
+    {
+        if (collider.gameObject.CompareTag("RangoAtaqueEnemy1"))
+        {
+            enmy.playerOnRange = false;
+        }
     }
 }

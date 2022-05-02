@@ -10,11 +10,14 @@ TagManager:
   - AtaqueDos
   - AtaqueTres
   - AtaqueCargado
+  - RangoAtaqueEnemy1
+  - AtaqueNormalEnemy1
+  - MordiscoEnemy1
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - 

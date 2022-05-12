@@ -25,15 +25,30 @@ public class Yaldabaoth : MonoBehaviour
     [Header("Ataque basico")]
     [SerializeField] private float ataqueBasicoDMG;
 
+    [Header("Pasiva")]
+    [SerializeField] private GameObject portales;
+
+    [Header("AtaqueFinal")]
+    public GameObject goA;
+    public GameObject goB;
+    public GameObject goC;
+      
 
     void Start()
     {
         playerSeguir = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        portales.SetActive(false);
     }
 
     void Update()
     {
         Following();
+        if (vidaYalda <= 50)
+        {
+            StopAllCoroutines();
+            StartCoroutine(ataqueFinal());
+            Pasiva();
+        }
     }
 
     void FixedUpdate()
@@ -100,10 +115,12 @@ public class Yaldabaoth : MonoBehaviour
         if (vidaYalda > 50)
         {
             Debug.Log("ataquebasico SIN pasiva");
+            AtaqueBasicoSinPasiva();
         }
         else if (vidaYalda <= 50)
         {
             Debug.Log("ataquebasico CON pasiva");
+            AtaqueBasicoConPasiva();
         }
         yield return new WaitForSecondsRealtime(2f);
         atacando = false;
@@ -116,15 +133,46 @@ public class Yaldabaoth : MonoBehaviour
         if (vidaYalda > 50)
         {
             Debug.Log("Especial SIN pasiva");
+            EspecialSinPasiva();
         }
         else if (vidaYalda <= 50)
         {
             Debug.Log("Especial CON pasiva");
+            EspecialConPasiva();
         }
         yield return new WaitForSecondsRealtime(2f);
         atacando = false;
         speed = 1;
         yield break;
+    }
+
+    IEnumerator ataqueFinal()
+    {
+        // Varios dash con patron y cuando termine, generar un triangulo en el suelo que haga daño al player y se quede quieto por 3s.
+        yield break;
+    }
+
+    private void AtaqueBasicoSinPasiva()
+    {
+        // 
+    }
+    private void AtaqueBasicoConPasiva()
+    {
+        // 2 ataques normales consecutivos y dsp de 1.5s(? lanzar un ataque con mas dmg.
+    }
+
+    private void Pasiva()
+    {
+        portales.SetActive(true);
+    }
+
+    private void EspecialSinPasiva()
+    {
+        // 
+    }
+    private void EspecialConPasiva()
+    {
+        // Cuando el jugador esta lejos, carga un dash por 2s y se impulsa hacia la ultima posicion del player.
     }
 }
 

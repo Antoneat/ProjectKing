@@ -26,7 +26,7 @@ public class Enemy : MonoBehaviour
     public GameObject mordiscoGO;
 
     [Header("Extra")]
-    [SerializeField] private float knockbackStrength = 4;
+    [SerializeField] private float knockbackStrength;
 
     void Start()
     {
@@ -103,7 +103,6 @@ public class Enemy : MonoBehaviour
 
             rb.AddForce(direction.normalized * knockbackStrength, ForceMode.Impulse);
         }
-
 
         if (collider.gameObject.CompareTag("AtaqueUno"))
         {

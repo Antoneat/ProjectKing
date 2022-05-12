@@ -65,8 +65,6 @@ public class Player : MonoBehaviour
 
         attackCooldown -= Time.deltaTime;
 
-        Debug.Log(timePressed);
-
         if (Input.GetKey(KeyCode.J))
         {
             timePressed -= Time.deltaTime;
@@ -186,7 +184,7 @@ public class Player : MonoBehaviour
 
     private void Quieto()
     {
-        if(Input.GetKeyUp(KeyCode.W) && Input.GetKeyUp(KeyCode.A) && Input.GetKeyUp(KeyCode.S) && Input.GetKeyUp(KeyCode.D))
+        if(Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.D))
         {
             rb.velocity = new Vector3(0, 0, 0);
         }

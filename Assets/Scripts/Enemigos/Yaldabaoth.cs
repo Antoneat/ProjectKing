@@ -26,7 +26,7 @@ public class Yaldabaoth : MonoBehaviour
     [SerializeField] private float ataqueBasicoDMG;
 
     [Header("Pasiva")]
-    [SerializeField] private GameObject portales;
+    //[SerializeField] private GameObject portales;
 
     [Header("AtaqueFinal")]
     public GameObject goA;
@@ -37,7 +37,7 @@ public class Yaldabaoth : MonoBehaviour
     void Start()
     {
         playerSeguir = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        portales.SetActive(false);
+        //portales.SetActive(false);
     }
 
     void Update()
@@ -163,7 +163,7 @@ public class Yaldabaoth : MonoBehaviour
 
     private void Pasiva()
     {
-        portales.SetActive(true);
+        //portales.SetActive(true);
     }
 
     private void EspecialSinPasiva()

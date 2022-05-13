@@ -29,7 +29,7 @@ public class Console : MonoBehaviour
         else
         {
             instance = this;
-            RegisterCommand("clear", Clear, "Limpiar consola.");
+            RegisterCommand("clear", Clear, "Limpiar consola");
             RegisterCommand("help", Help, "Ayuda");
             RegisterCommand("exit", ExitGame, "Salir del juego");
         }

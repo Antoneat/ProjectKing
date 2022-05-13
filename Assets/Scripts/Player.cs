@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -41,6 +43,11 @@ public class Player : MonoBehaviour
 
     [Header("Extra")]
     [SerializeField] private Enemy enmy;
+    [SerializeField] private int sceneId = 1;
+    public TMP_Text vidapersonajeTxt;
+    public TMP_Text dmgTxt;
+    int a = 0;
+    int b = 0;
 
     [Header("VFX")]
     public GameObject ataqueUno;
@@ -53,13 +60,21 @@ public class Player : MonoBehaviour
 
         actualvida = maxVida;
 
-        Console.instance.RegisterCommand("godmode_on", godmode_on, "Activar el modo Dios.");
-        Console.instance.RegisterCommand("godmode_off", godmode_off, "Desactivar el modo Dios.");
+        a = 0;
+
+        Console.instance.RegisterCommand("godmode", godmode, "Activar/Desactivar el modo Dios.");
+        Console.instance.RegisterCommand("restartlevel", resetlevel, "Reiniciar nivel");
+        Console.instance.RegisterCommand("previouslevel", previouslevel, "Nivel anterior");
+        Console.instance.RegisterCommand("nextlevel", nextlevel, "Siguiente nivel");
+        Console.instance.RegisterCommand("crt", crt, "Creditos");
+        Console.instance.RegisterCommand("infinitedmg", infinitedmg, "Daño infinito");
     }
 
     void Update()
     {
-        Debug.Log(actualvida);
+        vidapersonajeTxt.text = "Vida: " + actualvida.ToString();
+
+        dmgTxt.text = "Daño: " + AttackDmgUno.ToString();
         
         movement = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
 
@@ -196,16 +211,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void godmode_on()
-    {
-        actualvida = 1000000000;
-    }
-
-    public void godmode_off()
-    {
-        actualvida = maxVida;
-    }
-
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.cyan;
@@ -233,5 +238,57 @@ public class Player : MonoBehaviour
         {
             enmy.playerOnRange = false;
         }
+    }
+
+
+
+    public void godmode()
+    {
+        a++;
+        if (a % 2 == 0)
+        {
+            actualvida = maxVida;
+        }
+        else if (a % 2 == 1)
+        {
+            actualvida = 999999;
+        }
+    }
+
+    public void infinitedmg()
+    {
+        b++;
+        if (b % 2 == 0)
+        {
+            AttackDmgUno = 10;
+            AttackDmgDos = 20;
+            AttackDmgTres = 30;
+            AttackDmgCargado = 5;
+        }
+        else if (b % 2 == 1)
+        {
+            AttackDmgUno = 999;
+            AttackDmgDos = 999;
+            AttackDmgTres = 999;
+            AttackDmgCargado = 999;
+        }
+    }
+
+    public void resetlevel()
+    {
+        SceneManager.LoadScene(sceneId);
+        // Cuando pase de nivel agregarle en el trigger un +1 al sceneId para el reset de lvl en la consola
+    }
+    public void nextlevel()
+    {
+        SceneManager.LoadScene(sceneId + 1);
+    }
+    public void previouslevel()
+    {
+        SceneManager.LoadScene(sceneId - 1);
+    }
+    public void crt()
+    {
+        SceneManager.LoadScene(2);
     }
 }

@@ -58,7 +58,7 @@ public class Enemy : MonoBehaviour
     {
         if (vida <= 0)
         {
-            plyr.vida += 10;
+            plyr.actualvida += 10;
             Destroy(gameObject);
         }
     }

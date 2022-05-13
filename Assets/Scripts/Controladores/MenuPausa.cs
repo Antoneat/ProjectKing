@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 
 public class MenuPausa : MonoBehaviour
 {
@@ -65,11 +64,5 @@ public class MenuPausa : MonoBehaviour
         //Set a new selected object
         EventSystem.current.SetSelectedGameObject(pauseFirstButton);
 
-    }
-
-    public void GoToMenu()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(0);
     }
 }

@@ -11,8 +11,8 @@ public class Player : MonoBehaviour
     public Transform playerMesh;
 
     [Header("Vida")]
-    public float vida;
-    private float maxVida;
+    public float actualvida;
+    private float maxVida = 20;
 
     [Header("Desplazamiento")]
     public bool dash;
@@ -50,10 +50,17 @@ public class Player : MonoBehaviour
     void Start()
     {
         rb = this.GetComponent<Rigidbody>();
+
+        actualvida = maxVida;
+
+        Console.instance.RegisterCommand("godmode_on", godmode_on, "Activar el modo Dios.");
+        Console.instance.RegisterCommand("godmode_off", godmode_off, "Desactivar el modo Dios.");
     }
 
     void Update()
     {
+        Debug.Log(actualvida);
+        
         movement = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
 
         dashCooldown -= Time.deltaTime;
@@ -97,7 +104,6 @@ public class Player : MonoBehaviour
         Movimiento(movement);
         if (dash)
         {
-            //Dash();
             StartCoroutine(Dash());
         }
 
@@ -182,13 +188,22 @@ public class Player : MonoBehaviour
         attackCharged = false;
     }
 
-    private void Quieto()
+    public void Quieto()
     {
         if(Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.D))
         {
             rb.velocity = new Vector3(0, 0, 0);
         }
+    }
 
+    public void godmode_on()
+    {
+        actualvida = 1000000000;
+    }
+
+    public void godmode_off()
+    {
+        actualvida = maxVida;
     }
 
     private void OnDrawGizmos()
@@ -205,11 +220,11 @@ public class Player : MonoBehaviour
         }
         if (collider.gameObject.CompareTag("AtaqueNormalEnemy1"))
         {
-            vida -= enmy.ataqueNormalDMG;
+            actualvida -= enmy.ataqueNormalDMG;
         }
         if (collider.gameObject.CompareTag("MordiscoEnemy1"))
         {
-            vida -= enmy.mordiscoDMG;
+            actualvida -= enmy.mordiscoDMG;
         }
     }
     private void OnTriggerExit(Collider collider)

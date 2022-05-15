@@ -7,10 +7,11 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
     [Header("Movimiento")]
-    public float speed;
-    public Rigidbody rb;
-    public Vector3 movement;
+    public float speed = 8f;
+    private Vector3 movement;
     public Transform playerMesh;
+    Rigidbody rb;
+    
 
     [Header("Vida")]
     public float actualvida;
@@ -18,8 +19,11 @@ public class Player : MonoBehaviour
 
     [Header("Desplazamiento")]
     public bool dash;
-    public float dashCooldown;
     public float speedDash;
+    private float dashCooldown = 0.2f;
+    [SerializeField] private float dashLength = 0.1f;
+    public float dashCounter;
+    public float dashCoolCounter;
 
     [Header("AtaqueCombo")]
     [SerializeField] private int numberOfClicks = 0;
@@ -56,11 +60,9 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        rb = this.GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
 
         actualvida = maxVida;
-
-        a = 0;
 
         Console.instance.RegisterCommand("godmode", godmode, "Activar/Desactivar el modo Dios.");
         Console.instance.RegisterCommand("restartlevel", resetlevel, "Reiniciar nivel");
@@ -78,11 +80,28 @@ public class Player : MonoBehaviour
         
         movement = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
 
-        dashCooldown -= Time.deltaTime;
-
-        if (Input.GetKeyDown(KeyCode.Space) && dashCooldown <= 0f)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            dash = true;
+            if (dashCoolCounter <= 0f && dashCounter <= 0)
+            {
+                dash = true;
+                dashCounter = dashLength;
+                StartCoroutine(Dash(movement));
+            }
+        }
+        if(dashCoolCounter > 0)
+        {
+            dashCoolCounter -= Time.deltaTime;
+        }
+        
+        if (dashCounter > 0)
+        {
+            dashCounter -= Time.deltaTime;
+            if (dashCounter <= 0)
+            {
+                dash = false;
+                dashCoolCounter = dashCooldown;
+            }
         }
 
         attackCooldown -= Time.deltaTime;
@@ -117,11 +136,7 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         Movimiento(movement);
-        if (dash)
-        {
-            StartCoroutine(Dash());
-        }
-
+        
         if (attackCombo)
         {
             AttackCombo();
@@ -132,24 +147,46 @@ public class Player : MonoBehaviour
             StartCoroutine(AttackingCharg());
             timePressed = 0.9f;
         }
-        Quieto();
+        //Quieto();
     }
 
-    public void Movimiento(Vector3 direction)
+    public void Movimiento(Vector3 movement)
     {
-        rb.MovePosition(transform.position + (direction * speed * Time.deltaTime));
-        playerMesh.rotation = Quaternion.LookRotation(movement);
+        //rb.MovePosition(transform.position + (direction * speed * Time.deltaTime));
+        /*
+        float xMov = Input.GetAxisRaw("Horizontal");
+        float zMov = Input.GetAxisRaw("Vertical");
+
+        rb.velocity = new Vector3(xMov, 0, zMov) * speed;
+        */
+        /*
+        if (dash == true)
+        {
+            rb.AddForce((movement * speedDash * Time.deltaTime), ForceMode.Impulse);
+
+            //rb.velocity = movement * speedDash * Time.deltaTime;
+            //playerMesh.rotation = Quaternion.LookRotation(rb.velocity);
+            
+            
+        }
+        else */if(dash == false) 
+        {
+            rb.velocity = movement * speed * Time.deltaTime;
+            playerMesh.rotation = Quaternion.LookRotation(rb.velocity.normalized);
+        }
+        
     }
 
-    IEnumerator Dash()
+    
+    IEnumerator Dash(Vector3 movement)
     {
-        rb.AddForce(transform.forward * speedDash, ForceMode.Impulse);
-        dashCooldown = 2;
-        dash = false;
+        rb.AddForce(movement * speedDash * Time.deltaTime, ForceMode.Impulse);
+        //dashCooldown = 2;
+        //dash = false;
         yield return new WaitForSecondsRealtime(0.3f);
-        rb.velocity = new Vector3(0,0,0);
+        //rb.velocity = new Vector3(0,0,0);
     }
-
+    
     private void AttackCombo()
     {
         lastClickedTime = Time.time;
@@ -165,6 +202,7 @@ public class Player : MonoBehaviour
             ataqueTres.SetActive(false);
             attackCooldown = 0.25f;
         }
+
         numberOfClicks = Mathf.Clamp(numberOfClicks, 0, 3);
 
         if (numberOfClicks == 2 && attackCooldown <= 0)

@@ -5,6 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public Player plyr;
+    public StateManager SM;
 
     [Header("Vida")]
     public int vida;
@@ -46,7 +47,7 @@ public class Enemy : MonoBehaviour
         if(playerOnRange == true)
         {
             speed = 0f;
-            activator();
+            ChooseAtk();
         }
         else if (playerOnRange == false)
         {
@@ -63,7 +64,21 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void activator()
+    public void ChooseAtk()
+    {
+        if (SM.ps == PlayerState.Normal || SM.ps == PlayerState.Stun || SM.ps == PlayerState.Sangrado)
+       {
+            StartCoroutine(AtaqueBasico());
+        }
+        else if (SM.ps == PlayerState.Quemado)
+        {
+            StartCoroutine(Mordisco());
+        }
+        
+        
+    }
+
+  /*  public void activator()
     {
         switch(Random.Range(0,2))
         {
@@ -72,7 +87,7 @@ public class Enemy : MonoBehaviour
             case 1: StartCoroutine(Mordisco());
                 break;
         }
-    }
+    }*/
 
     IEnumerator AtaqueBasico()
     {
@@ -87,6 +102,7 @@ public class Enemy : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(1f);
         mordiscoGO.SetActive(true);
+        SM.ps = PlayerState.Sangrado;
         yield return new WaitForSecondsRealtime(0.2f);
         mordiscoGO.SetActive(false);
         yield break;
@@ -125,8 +141,8 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void NumAlea()
+  /*  public void NumAlea()
     {
         int numalea = Random.Range(1,2);
-    }
+    }/*/
 }

@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
 
     [Header("Vida")]
     public int vida;
+    public bool dead;
 
     [Header("Following")]
     public float speed;
@@ -31,7 +32,9 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+        plyr = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         ObjetoASeguir = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        dead = false;
     }
 
     void Update()
@@ -60,6 +63,7 @@ public class Enemy : MonoBehaviour
         if (vida <= 0)
         {
             plyr.actualvida += 10;
+            dead = true;
             Destroy(gameObject);
         }
     }

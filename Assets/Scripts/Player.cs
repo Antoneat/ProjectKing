@@ -10,8 +10,7 @@ public class Player : MonoBehaviour
     public float speed = 8f;
     private Vector3 movement;
     public Transform playerMesh;
-    Rigidbody rb;
-    
+    public Rigidbody rb;
 
     [Header("Vida")]
     public float actualvida;
@@ -58,11 +57,21 @@ public class Player : MonoBehaviour
     public GameObject ataqueDos;
     public GameObject ataqueTres;
 
+    [Header("Coleccionables")]
+    public int collectables = 1;
+    public int counterCollectables = 0;
+    public TMP_Text collecTxt;
+    public GameObject collecTxtGO;
+    public float counterNum;
+
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
 
         actualvida = maxVida;
+
+        collecTxtGO.SetActive(false);
 
         Console.instance.RegisterCommand("godmode", godmode, "Activar/Desactivar el modo Dios.");
         Console.instance.RegisterCommand("restartlevel", resetlevel, "Reiniciar nivel");
@@ -77,7 +86,22 @@ public class Player : MonoBehaviour
         vidapersonajeTxt.text = "Vida: " + actualvida.ToString();
 
         dmgTxt.text = "Daño: " + AttackDmgUno.ToString();
-        
+
+        collecTxt.text = counterCollectables.ToString() + " / 5";
+
+        counterNum += Time.deltaTime;
+
+        if (collectables == counterCollectables)
+        {
+            Collects();
+            counterNum = 0;
+        }
+        if (counterNum > 3)
+        {
+            collecTxtGO.SetActive(false);
+            counterNum = 0;
+        }
+
         movement = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -89,6 +113,7 @@ public class Player : MonoBehaviour
                 StartCoroutine(Dash(movement));
             }
         }
+
         if(dashCoolCounter > 0)
         {
             dashCoolCounter -= Time.deltaTime;
@@ -147,44 +172,21 @@ public class Player : MonoBehaviour
             StartCoroutine(AttackingCharg());
             timePressed = 0.9f;
         }
-        //Quieto();
     }
 
     public void Movimiento(Vector3 movement)
     {
-        //rb.MovePosition(transform.position + (direction * speed * Time.deltaTime));
-        /*
-        float xMov = Input.GetAxisRaw("Horizontal");
-        float zMov = Input.GetAxisRaw("Vertical");
-
-        rb.velocity = new Vector3(xMov, 0, zMov) * speed;
-        */
-        /*
-        if (dash == true)
-        {
-            rb.AddForce((movement * speedDash * Time.deltaTime), ForceMode.Impulse);
-
-            //rb.velocity = movement * speedDash * Time.deltaTime;
-            //playerMesh.rotation = Quaternion.LookRotation(rb.velocity);
-            
-            
-        }
-        else */if(dash == false) 
+        if(dash == false) 
         {
             rb.velocity = movement * speed * Time.deltaTime;
-            playerMesh.rotation = Quaternion.LookRotation(rb.velocity.normalized);
+            //playerMesh.rotation = Quaternion.LookRotation(rb.velocity.normalized);
         }
-        
     }
-
     
     IEnumerator Dash(Vector3 movement)
     {
-        rb.AddForce(movement * speedDash * Time.deltaTime, ForceMode.Impulse);
-        //dashCooldown = 2;
-        //dash = false;
+        rb.AddForce(movement * speedDash, ForceMode.Impulse);
         yield return new WaitForSecondsRealtime(0.3f);
-        //rb.velocity = new Vector3(0,0,0);
     }
     
     private void AttackCombo()
@@ -241,18 +243,16 @@ public class Player : MonoBehaviour
         attackCharged = false;
     }
 
-    public void Quieto()
-    {
-        if(Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.D))
-        {
-            rb.velocity = new Vector3(0, 0, 0);
-        }
-    }
-
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, radio);
+    }
+
+    private void Collects()
+    {
+        collecTxtGO.SetActive(true);
+        collectables++;
     }
 
     private void OnTriggerEnter(Collider collider)
@@ -277,8 +277,6 @@ public class Player : MonoBehaviour
             enmy.playerOnRange = false;
         }
     }
-
-
 
     public void godmode()
     {

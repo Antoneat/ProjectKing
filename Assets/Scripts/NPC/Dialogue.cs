@@ -16,6 +16,12 @@ public class Dialogue : MonoBehaviour
     public bool didDialogueStart;   // Comprobante si el dialogo todavia no empieza.
     public int lineIndex;   // Indice que se usara para comprobar 
 
+    public Player plyr;
+
+    void Start()
+    {
+        plyr = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+    }
 
     void Update()
     {
@@ -62,6 +68,8 @@ public class Dialogue : MonoBehaviour
             dialogueGO.SetActive(false);
             dialogueMark.SetActive(true);
             Time.timeScale = 1f;
+
+            plyr.rb.velocity = new Vector3(0,0,0);
         }
     }
 

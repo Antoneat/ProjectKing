@@ -12,10 +12,16 @@ public class MainMenuController : MonoBehaviour
 
     void Start()
     {
+        AudioManager.instance.Play("MenuSong");
         //clear selected object
         //EventSystem.current.SetSelectedGameObject(null);
         //Set a new selected object
         EventSystem.current.SetSelectedGameObject(menuFirstButton);
+    }
+
+    public void PlayGame()
+    {
+        LevelLoader.LoadLevel("Walter Scene");
     }
 
     public void OpenOptions()

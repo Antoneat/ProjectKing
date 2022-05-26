@@ -255,27 +255,25 @@ public class Player : MonoBehaviour
         collectables++;
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("FueraDelMundo")) transform.position = new Vector3(0,0.7f,0);
+    }
+
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject.CompareTag("RangoAtaqueEnemy1"))
-        {
-            enmy.playerOnRange = true;
-        }
-        if (collider.gameObject.CompareTag("AtaqueNormalEnemy1"))
-        {
-            actualvida -= enmy.ataqueNormalDMG;
-        }
-        if (collider.gameObject.CompareTag("MordiscoEnemy1"))
-        {
-            actualvida -= enmy.mordiscoDMG;
-        }
+        if (collider.gameObject.CompareTag("RangoAtaqueEnemy1")) enmy.playerOnRange = true;
+
+        if (collider.gameObject.CompareTag("AtaqueNormalEnemy1")) actualvida -= enmy.ataqueNormalDMG;
+
+        if (collider.gameObject.CompareTag("MordiscoEnemy1")) actualvida -= enmy.mordiscoDMG;
+
     }
+
     private void OnTriggerExit(Collider collider)
     {
-        if (collider.gameObject.CompareTag("RangoAtaqueEnemy1"))
-        {
-            enmy.playerOnRange = false;
-        }
+        if (collider.gameObject.CompareTag("RangoAtaqueEnemy1")) enmy.playerOnRange = false;
+
     }
 
     public void godmode()

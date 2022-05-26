@@ -13,6 +13,7 @@ TagManager:
   - RangoAtaqueEnemy1
   - AtaqueNormalEnemy1
   - MordiscoEnemy1
+  - FueraDelMundo
   layers:
   - Default
   - TransparentFX

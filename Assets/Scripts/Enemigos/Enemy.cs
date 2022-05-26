@@ -112,6 +112,11 @@ public class Enemy : MonoBehaviour
         yield break;
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("FueraDelMundo")) Destroy(gameObject); // Si toca los colliders de FueraDelMundo, se destruye.
+    }
+
     private void OnTriggerEnter(Collider collider)
     {
         Rigidbody rb = collider.GetComponent<Rigidbody>();
@@ -124,25 +129,13 @@ public class Enemy : MonoBehaviour
             rb.AddForce(direction.normalized * knockbackStrength, ForceMode.Impulse);
         }
 
-        if (collider.gameObject.CompareTag("AtaqueUno"))
-        {
-            vida -= plyr.AttackDmgUno;  // Disminuira cierta cantidad de vida cada que sea golpeado por el primer ataque.
-        }
+        if (collider.gameObject.CompareTag("AtaqueUno")) vida -= plyr.AttackDmgUno; // Baja la vida del enemigo acorde con el valor que se puso en el ataque.
 
-        if (collider.gameObject.CompareTag("AtaqueDos"))
-        {
-            vida -= plyr.AttackDmgDos;  // Disminuira cierta cantidad de vida cada que sea golpeado por el primer ataque.
-        }
+        if (collider.gameObject.CompareTag("AtaqueDos")) vida -= plyr.AttackDmgDos; // Lo de arriba x2.
 
-        if (collider.gameObject.CompareTag("AtaqueTres"))
-        {
-            vida -= plyr.AttackDmgTres;  // Disminuira cierta cantidad de vida cada que sea golpeado por el primer ataque.
-        }
+        if (collider.gameObject.CompareTag("AtaqueTres")) vida -= plyr.AttackDmgTres; // Lo de arriba x3.
 
-        if (collider.gameObject.CompareTag("AtaqueCargado"))
-        {
-            vida -= plyr.AttackDmgCargado;  // Disminuira cierta cantidad de vida cada que sea golpeado por el primer ataque.
-        }
+        if (collider.gameObject.CompareTag("AtaqueCargado")) vida -= plyr.AttackDmgCargado; // Lo de arriba x4.
     }
 
   /*  public void NumAlea()

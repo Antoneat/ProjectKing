@@ -19,10 +19,15 @@ public class MainMenuController : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(menuFirstButton);
     }
 
-    public void PlayGame()
+    private void Update()
     {
-        LevelLoader.LoadLevel("Walter Scene");
+        if(Input.GetMouseButtonDown(0))
+        {
+            if (EventSystem.current.IsPointerOverGameObject())
+                return;
+        }
     }
+
 
     public void OpenOptions()
     {

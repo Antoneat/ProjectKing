@@ -70,7 +70,6 @@ public class MenuPausa : MonoBehaviour
     public void GoToMainMenu()
     {
         Time.timeScale = 1f;
-        LevelLoader.LoadLevel("MenuPrincipal");
-        //SceneManager.LoadScene(0);
+        SceneManager.LoadScene(0);
     }
 }

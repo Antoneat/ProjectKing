@@ -490,6 +490,7 @@ GameObject:
   - component: {fileID: 127568709}
   - component: {fileID: 127568711}
   - component: {fileID: 127568710}
+  - component: {fileID: 127568712}
   m_Layer: 5
   m_Name: PanelConfig
   m_TagString: Untagged
@@ -564,6 +565,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 127568708}
   m_CullTransparentMesh: 1
+--- !u!114 &127568712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 127568708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 910f1d97157252046b32ab4bd4f0331c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mixer: {fileID: 24100000, guid: 92fe3fe946e503d479f7ffec795824f1, type: 2}
+  sliderMusic: {fileID: 308698698}
 --- !u!1 &132777816
 GameObject:
   m_ObjectHideFlags: 0
@@ -576,6 +591,7 @@ GameObject:
   - component: {fileID: 132777820}
   - component: {fileID: 132777822}
   - component: {fileID: 132777818}
+  - component: {fileID: 132777823}
   m_Layer: 5
   m_Name: Button_Jugar
   m_TagString: Untagged
@@ -647,9 +663,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 500367596}
-        m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
-        m_MethodName: PlayGame
+      - m_Target: {fileID: 132777823}
+        m_TargetAssemblyTypeName: ChangeScene, Assembly-CSharp
+        m_MethodName: ChangeSceneOption
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -756,6 +772,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &132777823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 132777816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 757a913ae61d1044683caf3c8195752d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 4
 --- !u!1 &158084460
 GameObject:
   m_ObjectHideFlags: 0
@@ -1030,7 +1059,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 500367597}
+      - m_Target: {fileID: 127568712}
         m_TargetAssemblyTypeName: AudioEvents, Assembly-CSharp
         m_MethodName: SetVolumenMusic
         m_Mode: 1
@@ -1153,7 +1182,6 @@ GameObject:
   - component: {fileID: 500367593}
   - component: {fileID: 500367592}
   - component: {fileID: 500367596}
-  - component: {fileID: 500367597}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1265,20 +1293,6 @@ MonoBehaviour:
   menuFirstButton: {fileID: 132777816}
   optionsFirstButtonMainMenu: {fileID: 308698697}
   optionsCloseButton: {fileID: 1229347801}
---- !u!114 &500367597
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 500367591}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 910f1d97157252046b32ab4bd4f0331c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mixer: {fileID: 24100000, guid: 92fe3fe946e503d479f7ffec795824f1, type: 2}
-  sliderMusic: {fileID: 308698698}
 --- !u!1 &549955710
 GameObject:
   m_ObjectHideFlags: 0

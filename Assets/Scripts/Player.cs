@@ -9,8 +9,9 @@ public class Player : MonoBehaviour
     [Header("Movimiento")]
     public float speed = 8f;
     private Vector3 movement;
-    public Transform playerMesh;
+    public Transform playerTransform;
     public Rigidbody rb;
+    public SpriteRenderer spriteRenderer; //Giro del sprite
 
     [Header("Vida")]
     public float actualvida;
@@ -39,7 +40,7 @@ public class Player : MonoBehaviour
     private float timePressed = 0.9f;
 
     [Header("AtaqueCargado")]
-    [SerializeField] private float radio = 5f;
+    //[SerializeField] private float radio = 5f;
     public GameObject ataqueCargGO;
     public int AttackDmgCargado = 5;
     public bool attackCharged = false;
@@ -102,7 +103,7 @@ public class Player : MonoBehaviour
             counterNum = 0;
         }
 
-        movement = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+        //movement = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -160,7 +161,7 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        Movimiento(movement);
+        Movimiento();
         
         if (attackCombo)
         {
@@ -174,13 +175,62 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void Movimiento(Vector3 movement)
+    public void Movimiento()
     {
-        if(dash == false) 
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
+        if (dash == false) 
         {
-            rb.velocity = movement * speed * Time.deltaTime;
+            rb.velocity = new Vector3(horizontal * speed * Time.deltaTime, 0, vertical * speed * Time.deltaTime);
             //playerMesh.rotation = Quaternion.LookRotation(rb.velocity.normalized);
         }
+        if (horizontal > 0) //Dirección donde se mueve
+        {
+            movement.x = 1;
+        }
+        else if (horizontal < 0)
+        {
+            movement.x = -1;
+        }
+
+        if (movement.x < 0) //Giro del sprite cuando mueve DERECHA o IZQUIERDA 
+        {
+            spriteRenderer.flipX = false;
+        }
+        else if (movement.x > 0)
+        {
+            spriteRenderer.flipX = true;
+        }
+        /*
+        if(horizontal > 0)
+        {
+            ataqueUnoGO.transform.position = playerTransform.right;
+            ataqueDosGO.transform.position = playerTransform.right;
+            ataqueTresGO.transform.position = playerTransform.right;
+            ataqueCargGO.transform.position = playerTransform.right;
+        }
+        else if(horizontal < 0)
+        {
+            ataqueUnoGO.transform.position = -playerTransform.right;
+            ataqueDosGO.transform.position = -playerTransform.right;
+            ataqueTresGO.transform.position = -playerTransform.right;
+            ataqueCargGO.transform.position = -playerTransform.right;
+        }
+        else if(vertical > 0)
+        {
+            ataqueUnoGO.transform.position = playerTransform.forward;
+            ataqueDosGO.transform.position = playerTransform.forward;
+            ataqueTresGO.transform.position = playerTransform.forward;
+            ataqueCargGO.transform.position = playerTransform.forward;
+        }
+        else if (vertical < 0)
+        {
+            ataqueUnoGO.transform.position = -playerTransform.forward;
+            ataqueDosGO.transform.position = -playerTransform.forward;
+            ataqueTresGO.transform.position = -playerTransform.forward;
+            ataqueCargGO.transform.position = -playerTransform.forward;
+        }
+        */
     }
     
     IEnumerator Dash(Vector3 movement)
@@ -242,13 +292,13 @@ public class Player : MonoBehaviour
         }
         attackCharged = false;
     }
-
+    /*
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, radio);
     }
-
+    */
     private void Collects()
     {
         collecTxtGO.SetActive(true);

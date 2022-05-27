@@ -13,7 +13,6 @@ public class Respawn : MonoBehaviour
 
     void Start()
     {
-        
         enmy.dead = false;
         this.gameObject.name = EnemyName + " spawn point";
     }

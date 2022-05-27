@@ -7,24 +7,50 @@ using UnityEngine.Audio;
 public class AudioEvents : MonoBehaviour
 {
 
-    public AudioMixer mixer;
-    public Slider sliderMusic;
-    private float value;
+    private static readonly string BackgroundPref = "BackgroundPref";
+    private static readonly string SoundEffectPref = "SoundEffectPref";
 
-    void Start()
+    public Slider backgroundSlider, sounEffectsSlider;
+    private float backgroundFloat, soundEffectsFloat;
+
+    public AudioSource[] BackgroundAudio;
+    public AudioSource[] SoundEffectsAudio;
+
+
+    void Awake()
     {
-        mixer.GetFloat("volume", out value);
-        sliderMusic.value = value;
+        ContinueSettings();
     }
 
-    public void SetVolumenMusic()
+    public void SaveSoundSettings()
     {
-        mixer.SetFloat("volume", sliderMusic.value);
+        PlayerPrefs.SetFloat(BackgroundPref, backgroundFloat);
+        PlayerPrefs.SetFloat(SoundEffectPref, soundEffectsFloat);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnApplicationFocus(bool inFocus)
     {
-        
+        if (!inFocus)
+        {
+            SaveSoundSettings();
+        }
+    }
+
+    public void ContinueSettings()
+    {
+        backgroundFloat = PlayerPrefs.GetFloat(BackgroundPref);
+        soundEffectsFloat = PlayerPrefs.GetFloat(SoundEffectPref);
+        backgroundSlider.value = backgroundFloat;
+        sounEffectsSlider.value = soundEffectsFloat;
+
+        for (int i = 0; i < BackgroundAudio.Length; i++)
+        {
+            BackgroundAudio[i].volume = backgroundFloat;
+        }
+
+        for (int i = 0; i < SoundEffectsAudio.Length; i++)
+        {
+            SoundEffectsAudio[i].volume = soundEffectsFloat;
+        }
     }
 }

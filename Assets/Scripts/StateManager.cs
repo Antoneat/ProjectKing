@@ -8,6 +8,10 @@ public class StateManager : MonoBehaviour
     public PlayerState ps;
     Player Pl;
 
+    public float dmgTick; // Damage each tick
+    public float timeXTick; // Time in seconds each tick of damage
+    public int totalTicks; // how many seconds ( ticks )  damage each tick
+
     void Start()
     {
 
@@ -21,7 +25,13 @@ public class StateManager : MonoBehaviour
         Stados();
     }
 
-   void Stados()
+    IEnumerator Normal()
+    {
+        yield return new WaitForSecondsRealtime(0.1f);
+        yield break;
+    }
+
+    void Stados()
     {
         switch (ps)
         {
@@ -41,29 +51,50 @@ public class StateManager : MonoBehaviour
                 StartCoroutine(Stuneado());
                 break;
         }
-
     }
 
-    IEnumerator Normal()
-    {
-        yield return new WaitForSecondsRealtime(0.1f);
-        yield break;
-    }
     IEnumerator OnFire()
     {
-        Pl.actualvida -= 2;
-        Pl.speed -= 4;
-        yield return new WaitForSecondsRealtime(3f);
-        ps = PlayerState.Normal;
-        yield break;
+       
+        dmgTick = 2;
+        timeXTick = 2;
+        totalTicks = 4;
+
+        int ticks = 0;
+        int totalTicksTemp = totalTicks;
+
+        while (ticks < totalTicksTemp)
+        {
+            ticks++;
+            Pl.actualvida -= dmgTick;  // Player recive damage
+            Pl.speed -= 4;
+            yield return new WaitForSecondsRealtime(timeXTick);  // wait second
+            ps = PlayerState.Normal;
+            yield break;
+
+        }
     }
 
     IEnumerator Sangrando()
     {
-        Pl.actualvida -= 2;
-        yield return new WaitForSecondsRealtime(3f);
-        ps = PlayerState.Normal;
-        yield break;
+
+        dmgTick = 4;
+        timeXTick = 4;
+        totalTicks = 3;
+
+        int ticks = 0;
+        int totalTicksTemp = totalTicks;
+
+        while (ticks < totalTicksTemp)
+        {
+            ticks++;
+            Pl.actualvida -= dmgTick;  // Player recive damage
+            yield return new WaitForSecondsRealtime(timeXTick);  // wait second
+            ps = PlayerState.Normal;
+            yield break;
+            
+        }
+      
     }
 
     IEnumerator Stuneado()

@@ -6541,13 +6541,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 0
-  agent: {fileID: 0}
+  agent: {fileID: 504186430}
   destPoint: 0
-  goal: {fileID: 0}
+  goal: {fileID: 1779480191}
   playerDistance: 0
   awareAI: 0
   atkRange: 0
-  ee: {fileID: 0}
+  ee: {fileID: 504186429}
 --- !u!114 &504186428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20602,7 +20602,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8f71aa1f494683489dcdd9eb8f9820f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ps: 0
+  ps: 2
+  dmgTick: 0
+  timeXTick: 0
+  totalTicks: 0
 --- !u!1 &1780736264
 GameObject:
   m_ObjectHideFlags: 0

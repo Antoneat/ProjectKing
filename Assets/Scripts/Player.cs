@@ -312,7 +312,7 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject.CompareTag("RangoAtaqueEnemy1")) enmy.playerOnRange = true;
+       // if (collider.gameObject.CompareTag("RangoAtaqueEnemy1")) enmy.playerOnRange = true;
 
         if (collider.gameObject.CompareTag("AtaqueNormalEnemy1")) actualvida -= enmy.ataqueNormalDMG;
 
@@ -320,11 +320,11 @@ public class Player : MonoBehaviour
 
     }
 
-    private void OnTriggerExit(Collider collider)
+   /* private void OnTriggerExit(Collider collider)
     {
         if (collider.gameObject.CompareTag("RangoAtaqueEnemy1")) enmy.playerOnRange = false;
 
-    }
+    }*/
 
     public void godmode()
     {

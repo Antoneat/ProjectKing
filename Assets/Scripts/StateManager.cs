@@ -18,15 +18,15 @@ public class StateManager : MonoBehaviour
 
     void Update()
     {
-
+        Stados();
     }
 
-    void Stados()
+   void Stados()
     {
         switch (ps)
         {
             case PlayerState.Normal:
-
+                StartCoroutine(Normal());
                 break;
 
             case PlayerState.Quemado:
@@ -43,11 +43,18 @@ public class StateManager : MonoBehaviour
         }
 
     }
+
+    IEnumerator Normal()
+    {
+        yield return new WaitForSecondsRealtime(0.1f);
+        yield break;
+    }
     IEnumerator OnFire()
     {
         Pl.actualvida -= 2;
         Pl.speed -= 4;
         yield return new WaitForSecondsRealtime(3f);
+        ps = PlayerState.Normal;
         yield break;
     }
 
@@ -55,6 +62,7 @@ public class StateManager : MonoBehaviour
     {
         Pl.actualvida -= 2;
         yield return new WaitForSecondsRealtime(3f);
+        ps = PlayerState.Normal;
         yield break;
     }
 
@@ -62,6 +70,7 @@ public class StateManager : MonoBehaviour
     {
         Pl.speed = 0;
         yield return new WaitForSecondsRealtime(4f);
+        ps = PlayerState.Normal;
         yield break;
     }
 }

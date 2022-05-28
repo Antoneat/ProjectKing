@@ -11,39 +11,41 @@ public class Enemy : MonoBehaviour
     public int vida;
     public bool dead;
 
-    [Header("Following")]
-    public float speed;
-    public Transform ObjetoASeguir;
-    public bool playerOnRange;
-
-    [Header("RangoDeAtaque")]
-    public GameObject rangoAtaque;
-
     [Header("AtaqueBasico")]
-    public float ataqueNormalDMG;
+    public int ataqueNormalDMG;
     public GameObject basicoGO;
 
     [Header("Mordisco")]
-    public float mordiscoDMG;
+    public int mordiscoDMG;
     public GameObject mordiscoGO;
 
     [Header("Extra")]
     [SerializeField] private float knockbackStrength;
 
+    // [Header("Following")]
+    //public float speed;
+    //public Transform ObjetoASeguir;
+    //public bool playerOnRange;
+
+    //[Header("RangoDeAtaque")]
+    //public GameObject rangoAtaque;
+
     void Start()
     {
         plyr = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        ObjetoASeguir = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        //ObjetoASeguir = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         dead = false;
+        basicoGO.SetActive(false);
+        mordiscoGO.SetActive(false);
     }
 
     void Update()
     {
-        Following();
+        //Following();
         Muerte();
     }
 
-    private void Following()
+    /*private void Following()
     {
         transform.position = Vector3.MoveTowards(transform.position, ObjetoASeguir.transform.position, speed * Time.deltaTime);
         transform.forward = ObjetoASeguir.position - transform.position;
@@ -56,7 +58,7 @@ public class Enemy : MonoBehaviour
         {
             speed = 1f;
         }
-    }
+    }*/
 
     private void Muerte()
     {
@@ -79,7 +81,6 @@ public class Enemy : MonoBehaviour
             StartCoroutine(Mordisco());
         }
         
-        
     }
 
   /*  public void activator()
@@ -97,7 +98,7 @@ public class Enemy : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(1f);
         basicoGO.SetActive(true);
-        yield return new WaitForSecondsRealtime(0.2f);
+        yield return new WaitForSecondsRealtime(2f);
         basicoGO.SetActive(false);
         yield break;
     }
@@ -107,7 +108,7 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSecondsRealtime(1f);
         mordiscoGO.SetActive(true);
         SM.ps = PlayerState.Sangrado;
-        yield return new WaitForSecondsRealtime(0.2f);
+        yield return new WaitForSecondsRealtime(2f);
         mordiscoGO.SetActive(false);
         yield break;
     }

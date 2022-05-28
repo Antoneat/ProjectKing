@@ -5766,7 +5766,7 @@ GameObject:
   - component: {fileID: 317613459}
   m_Layer: 0
   m_Name: AtaqueNormalEnemy1
-  m_TagString: AtaqueNormalEnemy1
+  m_TagString: AtkBasicoE2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6518,9 +6518,8 @@ GameObject:
   - component: {fileID: 504186432}
   - component: {fileID: 504186431}
   - component: {fileID: 504186430}
-  - component: {fileID: 504186429}
-  - component: {fileID: 504186428}
-  - component: {fileID: 504186427}
+  - component: {fileID: 504186437}
+  - component: {fileID: 504186436}
   m_Layer: 0
   m_Name: Enemigo 2
   m_TagString: Enemigo
@@ -6528,67 +6527,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &504186427
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 504186426}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5cb289ffd2354544bba0856797a5ff1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Speed: 0
-  agent: {fileID: 504186430}
-  destPoint: 0
-  goal: {fileID: 1779480191}
-  playerDistance: 0
-  awareAI: 0
-  atkRange: 0
-  ee: {fileID: 504186429}
---- !u!114 &504186428
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 504186426}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5cb289ffd2354544bba0856797a5ff1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Speed: 0
-  agent: {fileID: 504186430}
-  destPoint: 0
-  goal: {fileID: 1779480191}
-  playerDistance: 0
-  awareAI: 15
-  atkRange: 5
-  ee: {fileID: 504186429}
---- !u!114 &504186429
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 504186426}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc2fc3ed03d20f14e9531bd6f2aa5f57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  plyr: {fileID: 1779480192}
-  SM: {fileID: 1779480194}
-  vida: 10
-  dead: 0
-  ataqueNormalDMG: 5
-  basicoGO: {fileID: 317613458}
-  mordiscoDMG: 7
-  mordiscoGO: {fileID: 1847779653}
-  knockbackStrength: 0
 --- !u!195 &504186430
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -6704,10 +6642,55 @@ Transform:
   m_Children:
   - {fileID: 317613460}
   - {fileID: 1847779655}
+  - {fileID: 1221339331}
   - {fileID: 660821797}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &504186436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 504186426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2aeb254ecdd31e740b5b5505fa34974c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Speed: 0
+  agent: {fileID: 504186430}
+  destPoint: 0
+  goal: {fileID: 1779480191}
+  playerDistance: 0
+  awareAI: 15
+  atkRange: 7
+  ee2: {fileID: 504186437}
+--- !u!114 &504186437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 504186426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9321be915f4db3848ad6051758ab1bf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  plyr: {fileID: 1779480192}
+  SM: {fileID: 1779480194}
+  eP: {fileID: 0}
+  vida: 0
+  dead: 0
+  ataqueNormalDMG: 0
+  basicoGO: {fileID: 0}
+  golpeDMG: 0
+  golpeGO: {fileID: 0}
+  rafagaDMG: 0
+  rafagaGO: {fileID: 0}
+  knockbackStrength: 0
 --- !u!1 &568404005
 GameObject:
   m_ObjectHideFlags: 0
@@ -6986,7 +6969,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 504186435}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -13262,6 +13245,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1216871745}
   m_CullTransparentMesh: 1
+--- !u!1 &1221339330
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1221339331}
+  - component: {fileID: 1221339332}
+  m_Layer: 0
+  m_Name: RafagaEnemy2
+  m_TagString: Rafaga2
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1221339331
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1221339330}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 504186435}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &1221339332
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1221339330}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 2
+  m_Height: 0
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1239340162
 GameObject:
   m_ObjectHideFlags: 0
@@ -20876,8 +20905,8 @@ GameObject:
   - component: {fileID: 1847779655}
   - component: {fileID: 1847779654}
   m_Layer: 0
-  m_Name: MordiscoEnemy1
-  m_TagString: MordiscoEnemy1
+  m_Name: GolpeEnemy2
+  m_TagString: Golpe2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

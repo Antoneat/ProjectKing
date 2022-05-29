@@ -14,8 +14,8 @@ public class Enemy2 : MonoBehaviour
     public bool dead;
 
     [Header("AtaqueBasico")]
-    public int ataqueNormalDMG;
-    public GameObject basicoGO;
+    public int atkbasDMG;
+    public GameObject atkbasGO;
 
     [Header("GolpeAlPiso")]
     public int golpeDMG;
@@ -31,12 +31,10 @@ public class Enemy2 : MonoBehaviour
     void Start()
     {
         plyr = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        SM = GetComponent<StateManager>();
-        eP2= GetComponent<enemyPatrol2>();
 
         dead = false;
 
-        basicoGO.SetActive(false);
+        atkbasGO.SetActive(false);
         golpeGO.SetActive(false);
         rafagaGO.SetActive(false);
     }
@@ -56,7 +54,7 @@ public class Enemy2 : MonoBehaviour
         }
     }
 
-    public void ChooseAtk()
+    public void ChooseAtk2()
     {
         if (SM.ps == PlayerState.Normal || SM.ps == PlayerState.Sangrado || SM.ps == PlayerState.Quemado)
         {
@@ -76,9 +74,9 @@ public class Enemy2 : MonoBehaviour
     IEnumerator AtaqueBasico()
     {
         yield return new WaitForSecondsRealtime(1f);
-        basicoGO.SetActive(true);
-        yield return new WaitForSecondsRealtime(2f);
-        basicoGO.SetActive(false);
+        atkbasGO.SetActive(true);
+        yield return new WaitForSecondsRealtime(4f);
+        atkbasGO.SetActive(false);
         yield break;
     }
 

@@ -45,7 +45,7 @@ public class enemyPatrol2 : MonoBehaviour
 
 		if (playerDistance <= atkRange)
 		{
-			ee2.ChooseAtk();
+			ee2.ChooseAtk2();
 		}
 		else if (playerDistance > atkRange)
 		{

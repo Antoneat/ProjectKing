@@ -319,7 +319,7 @@ public class Player : MonoBehaviour
 
         if (collider.gameObject.CompareTag("MordiscoEnemy1")) actualvida -= enmy.mordiscoDMG;
 
-        if (collider.gameObject.CompareTag("AtkBasicoE2")) actualvida -= enmy2.ataqueNormalDMG;
+        if (collider.gameObject.CompareTag("AtkBasicoE2")) actualvida -= enmy2.atkbasDMG;
 
         if (collider.gameObject.CompareTag("Golpe2")) actualvida -= enmy2.golpeDMG;
 

@@ -14,9 +14,6 @@ TagManager:
   - AtaqueNormalEnemy1
   - MordiscoEnemy1
   - FueraDelMundo
-  - AtkBasicoE2
-  - Golpe2
-  - Rafaga2
   layers:
   - Default
   - TransparentFX
@@ -24,7 +21,7 @@ TagManager:
   - Player
   - Water
   - UI
-  - obstacles
+  - 
   - 
   - 
   - 

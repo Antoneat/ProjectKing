@@ -9,7 +9,15 @@ public class InterfazComandos : MonoBehaviour
     
     public GameObject interfazComandos;
 
-    public GameObject PlayerConfigPanel, EnemysConfigPanel, CamaraConfigPanel;
+    [Header("PRIMER PANEL")]
+    public GameObject PlayerConfigPanel;
+    public GameObject EnemysConfigPanel;
+    public GameObject CamaraConfigPanel;
+
+    [Header("ENEMIGOS PANEL")]
+    public GameObject BuscadorConfigPanel;
+    public GameObject VerdugoConfigPanel;
+    public GameObject YaldabaothConfigPanel;
 
     void Start()
     {
@@ -48,6 +56,9 @@ public class InterfazComandos : MonoBehaviour
         PlayerConfigPanel.SetActive(false);
     }
 
+    /*////////////////////////////////////////////////////////////
+    ENEMYS
+    ////////////////////////////////////////////////////////////*/
     public void OpenEnemysConfig()
     {
         EnemysConfigPanel.SetActive(true);
@@ -56,6 +67,27 @@ public class InterfazComandos : MonoBehaviour
     {
         EnemysConfigPanel.SetActive(false);
     }
+
+    public void OpenBuscadorConfig()
+    {
+        BuscadorConfigPanel.SetActive(true);
+    }
+    public void CloseBuscadorconfig()
+    {
+        BuscadorConfigPanel.SetActive(false);
+    }
+    public void OpenVerdugoConfig()
+    {
+        VerdugoConfigPanel.SetActive(true);
+    }
+    public void CloseVerdugoConfig()
+    {
+        VerdugoConfigPanel.SetActive(false);
+    }
+
+    /*////////////////////////////////////////////////////////////
+    CAMARA
+    ////////////////////////////////////////////////////////////*/
 
     public void OpenCameraConfig()
     {

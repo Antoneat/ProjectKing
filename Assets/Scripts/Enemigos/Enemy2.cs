@@ -7,7 +7,7 @@ public class Enemy2 : MonoBehaviour
 
     public Player plyr;
     public StateManager SM;
-    public enemyPatrol eP;
+    public enemyPatrol2 eP2;
 
     [Header("Vida")]
     public int vida;
@@ -32,7 +32,7 @@ public class Enemy2 : MonoBehaviour
     {
         plyr = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         SM = GetComponent<StateManager>();
-        eP= GetComponent<enemyPatrol>();
+        eP2= GetComponent<enemyPatrol2>();
 
         dead = false;
 
@@ -66,7 +66,7 @@ public class Enemy2 : MonoBehaviour
         {
             StartCoroutine(GolpeAlPiso());
         }
-        else if (eP.playerDistance > eP.atkRange && eP.playerDistance < eP.awareAI)
+        else if (eP2.playerDistance > eP2.atkRange && eP2.playerDistance < eP2.awareAI)
         {
             StartCoroutine(Rafaga());
         }

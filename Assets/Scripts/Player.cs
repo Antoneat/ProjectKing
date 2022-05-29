@@ -47,6 +47,7 @@ public class Player : MonoBehaviour
 
     [Header("Extra")]
     [SerializeField] private Enemy enmy;
+    [SerializeField] private Enemy2 enmy2;
     [SerializeField] private int sceneId = 1;
     public TMP_Text vidapersonajeTxt;
     public TMP_Text dmgTxt;
@@ -318,13 +319,19 @@ public class Player : MonoBehaviour
 
         if (collider.gameObject.CompareTag("MordiscoEnemy1")) actualvida -= enmy.mordiscoDMG;
 
+        if (collider.gameObject.CompareTag("AtkBasicoE2")) actualvida -= enmy2.ataqueNormalDMG;
+
+        if (collider.gameObject.CompareTag("Golpe2")) actualvida -= enmy2.golpeDMG;
+
+        if (collider.gameObject.CompareTag("Rafaga2")) actualvida -= enmy2.rafagaDMG; ;
+
     }
 
-   /* private void OnTriggerExit(Collider collider)
-    {
-        if (collider.gameObject.CompareTag("RangoAtaqueEnemy1")) enmy.playerOnRange = false;
+    /* private void OnTriggerExit(Collider collider)
+     {
+         if (collider.gameObject.CompareTag("RangoAtaqueEnemy1")) enmy.playerOnRange = false;
 
-    }*/
+     }*/
 
     public void godmode()
     {

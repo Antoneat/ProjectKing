@@ -6636,7 +6636,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 504186426}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.25, y: 1, z: -13.75}
+  m_LocalPosition: {x: 13.2, y: 1, z: 21.6}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6681,15 +6681,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plyr: {fileID: 1779480192}
   SM: {fileID: 1779480194}
-  eP: {fileID: 0}
+  eP2: {fileID: 504186436}
   vida: 0
   dead: 0
-  ataqueNormalDMG: 0
-  basicoGO: {fileID: 0}
-  golpeDMG: 0
-  golpeGO: {fileID: 0}
-  rafagaDMG: 0
-  rafagaGO: {fileID: 0}
+  ataqueNormalDMG: 5
+  basicoGO: {fileID: 317613458}
+  golpeDMG: 7
+  golpeGO: {fileID: 1847779653}
+  rafagaDMG: 10
+  rafagaGO: {fileID: 1221339330}
   knockbackStrength: 0
 --- !u!1 &568404005
 GameObject:
@@ -6955,7 +6955,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &660821797
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20595,6 +20595,7 @@ MonoBehaviour:
   AttackDmgCargado: 2
   attackCharged: 0
   enmy: {fileID: 402222735}
+  enmy2: {fileID: 0}
   sceneId: 1
   vidapersonajeTxt: {fileID: 1980498473}
   dmgTxt: {fileID: 1621498788}

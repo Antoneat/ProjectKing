@@ -6,6 +6,6 @@ public class LookToCam : MonoBehaviour
 {
     void Update()
     {
-        transform.rotation = Quaternion.Euler(45,0,0);
+        transform.rotation = Quaternion.Euler(30,0,0);
     }
 }

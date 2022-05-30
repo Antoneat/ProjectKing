@@ -10,7 +10,7 @@ public class Enemy2 : MonoBehaviour
     public enemyPatrol2 eP2;
 
     [Header("Vida")]
-    public int vida;
+    public float vida;
     public bool dead;
 
     [Header("AtaqueBasico")]

@@ -7,8 +7,9 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
     [Header("Movimiento")]
-    public float speed = 8f;
-    private Vector3 movement;
+    public float speed;
+    public float maxSpeed;
+    public Vector3 movement;
     public Transform playerTransform;
     public Rigidbody rb;
     public SpriteRenderer spriteRenderer; //Giro del sprite
@@ -45,6 +46,14 @@ public class Player : MonoBehaviour
     public int AttackDmgCargado = 5;
     public bool attackCharged = false;
 
+    [Header("Bloqueo")]
+    public float bloqueoDuracion;
+    public float bloqueoMaxDuracion;
+    public bool blck;
+    public int cargasDeExplosion;
+    public LayerMask enemyLayer;
+
+
     [Header("Extra")]
     [SerializeField] private Enemy enmy;
     [SerializeField] private Enemy2 enmy2;
@@ -66,12 +75,19 @@ public class Player : MonoBehaviour
     public GameObject collecTxtGO;
     public float counterNum;
 
+    [Header("Enemigos")]
+    [SerializeField] private GameObject BuscadorPrefab;
+    [SerializeField] private GameObject VerdugoPrefab;
+    //[SerializeField] private GameObject YaldaPrefab;
+    //[SerializeField] private GameObject SamaelPrefab;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
 
         actualvida = maxVida;
+        blck = false;
+        bloqueoDuracion = bloqueoMaxDuracion;
 
         collecTxtGO.SetActive(false);
 
@@ -85,6 +101,9 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        invocacionesEnemigos();
+        Blocking();
+
         vidapersonajeTxt.text = "Vida: " + actualvida.ToString();
 
         dmgTxt.text = "Daño: " + AttackDmgUno.ToString();
@@ -105,6 +124,10 @@ public class Player : MonoBehaviour
         }
 
         //movement = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+        if(rb.velocity.magnitude > maxSpeed)
+        {
+            rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
+        }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -112,9 +135,15 @@ public class Player : MonoBehaviour
             {
                 dash = true;
                 dashCounter = dashLength;
-                StartCoroutine(Dash(movement));
+                StartCoroutine(Dash());
             }
         }
+
+        if(bloqueoDuracion > 0)
+        {
+            bloqueoDuracion -= Time.deltaTime;
+        }
+
 
         if(dashCoolCounter > 0)
         {
@@ -180,11 +209,14 @@ public class Player : MonoBehaviour
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
+
         if (dash == false) 
         {
-            rb.velocity = new Vector3(horizontal * speed * Time.deltaTime, 0, vertical * speed * Time.deltaTime);
-            //playerMesh.rotation = Quaternion.LookRotation(rb.velocity.normalized);
+            rb.velocity = new Vector3(horizontal * speed * Time.fixedDeltaTime, 0, vertical * speed * Time.fixedDeltaTime);
+            playerTransform.rotation = Quaternion.LookRotation(rb.velocity.normalized);
+            movement = new Vector3(0, 0, 0);
         }
+
         if (horizontal > 0) //Dirección donde se mueve
         {
             movement.x = 1;
@@ -194,6 +226,16 @@ public class Player : MonoBehaviour
             movement.x = -1;
         }
 
+        if(vertical > 0)
+        {
+            movement.z = 1;
+        }
+        else if (vertical < 0)
+        {
+            movement.z = -1;
+        }
+
+
         if (movement.x < 0) //Giro del sprite cuando mueve DERECHA o IZQUIERDA 
         {
             spriteRenderer.flipX = false;
@@ -202,41 +244,74 @@ public class Player : MonoBehaviour
         {
             spriteRenderer.flipX = true;
         }
-        /*
+        
         if(horizontal > 0)
         {
-            ataqueUnoGO.transform.position = playerTransform.right;
-            ataqueDosGO.transform.position = playerTransform.right;
-            ataqueTresGO.transform.position = playerTransform.right;
-            ataqueCargGO.transform.position = playerTransform.right;
+            ataqueUnoGO.transform.position = transform.position + new Vector3(2, 0, 0);
+            ataqueDosGO.transform.position = transform.position + new Vector3(2, 0, 0);
+            ataqueTresGO.transform.position = transform.position + new Vector3(2, 0, 0);
+            ataqueCargGO.transform.position = transform.position + new Vector3(2, 0, 0);
         }
         else if(horizontal < 0)
         {
-            ataqueUnoGO.transform.position = -playerTransform.right;
-            ataqueDosGO.transform.position = -playerTransform.right;
-            ataqueTresGO.transform.position = -playerTransform.right;
-            ataqueCargGO.transform.position = -playerTransform.right;
+            ataqueUnoGO.transform.position = transform.position + new Vector3(-2, 0, 0);
+            ataqueDosGO.transform.position = transform.position + new Vector3(-2, 0, 0);
+            ataqueTresGO.transform.position = transform.position + new Vector3(-2, 0, 0);
+            ataqueCargGO.transform.position = transform.position + new Vector3(-2, 0, 0);
         }
         else if(vertical > 0)
         {
-            ataqueUnoGO.transform.position = playerTransform.forward;
-            ataqueDosGO.transform.position = playerTransform.forward;
-            ataqueTresGO.transform.position = playerTransform.forward;
-            ataqueCargGO.transform.position = playerTransform.forward;
+            ataqueUnoGO.transform.position = transform.position + new Vector3(0, 0, 2);
+            ataqueDosGO.transform.position = transform.position + new Vector3(0, 0, 2);
+            ataqueTresGO.transform.position = transform.position + new Vector3(0, 0, 2);
+            ataqueCargGO.transform.position = transform.position + new Vector3(0, 0, 2);
         }
         else if (vertical < 0)
         {
-            ataqueUnoGO.transform.position = -playerTransform.forward;
-            ataqueDosGO.transform.position = -playerTransform.forward;
-            ataqueTresGO.transform.position = -playerTransform.forward;
-            ataqueCargGO.transform.position = -playerTransform.forward;
+            ataqueUnoGO.transform.position = transform.position + new Vector3(0, 0, -2);
+            ataqueDosGO.transform.position = transform.position + new Vector3(0, 0, -2);
+            ataqueTresGO.transform.position = transform.position + new Vector3(0, 0, -2);
+            ataqueCargGO.transform.position = transform.position + new Vector3(0, 0, -2);
         }
-        */
     }
     
-    IEnumerator Dash(Vector3 movement)
+    IEnumerator Dash()
     {
-        rb.AddForce(movement * speedDash, ForceMode.Impulse);
+        if(movement.z > 0)
+        {
+            rb.AddForce(Vector3.forward * speedDash, ForceMode.Impulse);
+        }
+        else if (movement.z < 0)
+        {
+            rb.AddForce(Vector3.back * speedDash, ForceMode.Impulse);
+        }
+        else if (movement.x > 0)
+        {
+            rb.AddForce(Vector3.right * speedDash, ForceMode.Impulse);
+        }
+        else if (movement.x < 0)
+        {
+            rb.AddForce(Vector3.left * speedDash, ForceMode.Impulse);
+        }
+
+        if (movement.z > 0 && movement.x > 0)
+        {
+            rb.AddForce(new Vector3(1, 0, 1) * speedDash, ForceMode.Impulse);
+        }
+        else if (movement.z > 0 && movement.x < 0)
+        {
+            rb.AddForce(new Vector3(-1, 0, 1) * speedDash, ForceMode.Impulse);
+        }
+        else if (movement.z < 0 && movement.x > 0)
+        {
+            rb.AddForce(new Vector3(1, 0, -1) * speedDash, ForceMode.Impulse);
+        }
+        else if (movement.z < 0 && movement.x < 0)
+        {
+            rb.AddForce(new Vector3(-1, 0, -1) * speedDash, ForceMode.Impulse);
+        }
+
+        movement = new Vector3(0, 0, 0);
         yield return new WaitForSecondsRealtime(0.3f);
     }
     
@@ -293,13 +368,43 @@ public class Player : MonoBehaviour
         }
         attackCharged = false;
     }
-    /*
+
+    private void Blocking()
+    {
+        if (Input.GetKey(KeyCode.K))
+        {
+            blck = true;
+            Debug.Log("Bloqueando1");
+            //animacion de bloqueo
+        }
+        if (bloqueoDuracion <= 0 && Input.GetKeyUp(KeyCode.K) || cargasDeExplosion == 5)
+        {
+            blck = false;
+            Debug.Log("Suelte de tecla2");
+            // animacion de explosion
+            StartCoroutine(DevolverDmg());
+            
+        }
+    }
+
+    IEnumerator DevolverDmg()
+    {
+        Collider[] EnemiesInRange = Physics.OverlapSphere(transform.position, 3f, enemyLayer);
+        foreach (Collider enemyInRange in EnemiesInRange)
+        {
+            enemyInRange.GetComponent<Enemy>().vida -= cargasDeExplosion * 0.15f;
+            enemyInRange.GetComponent<Enemy2>().vida -= cargasDeExplosion * 0.15f;
+            Debug.Log("Devolviendo dmg a enemigos3");
+        }
+        bloqueoDuracion = bloqueoMaxDuracion;
+        yield break;
+    }
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, radio);
+        Gizmos.DrawWireSphere(transform.position, 3f);
+        Gizmos.color = Color.red;
     }
-    */
+
     private void Collects()
     {
         collecTxtGO.SetActive(true);
@@ -313,25 +418,84 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
-       // if (collider.gameObject.CompareTag("RangoAtaqueEnemy1")) enmy.playerOnRange = true;
+        // if (collider.gameObject.CompareTag("RangoAtaqueEnemy1")) enmy.playerOnRange = true;
 
-        if (collider.gameObject.CompareTag("AtaqueNormalEnemy1")) actualvida -= enmy.ataqueNormalDMG;
+        if (collider.gameObject.CompareTag("AtaqueNormalEnemy1"))
+        {
+            if (blck == true)
+            {
+                RecieveDmgWhenBlock(enmy.ataqueNormalDMG);
+                cargasDeExplosion++;
+                Debug.Log("Recibiendo dmg reducido");
+            }
+            else
+            {
+                actualvida -= enmy.ataqueNormalDMG;
+            }
+        }
 
-        if (collider.gameObject.CompareTag("MordiscoEnemy1")) actualvida -= enmy.mordiscoDMG;
+        if (collider.gameObject.CompareTag("MordiscoEnemy1")) 
+        {
+            if (blck == true)
+            {
+                RecieveDmgWhenBlock(enmy.mordiscoDMG);
+                cargasDeExplosion++;
+                Debug.Log("Recibiendo dmg reducido");
+            }
+            else
+            {
+                actualvida -= enmy.mordiscoDMG;
+            }
+        } 
 
-        if (collider.gameObject.CompareTag("AtkBasicoE2")) actualvida -= enmy2.atkbasDMG;
+        if (collider.gameObject.CompareTag("AtkBasicoE2"))
+        {
+            if (blck == true)
+            {
+                RecieveDmgWhenBlock(enmy2.atkbasDMG);
+                cargasDeExplosion++;
+                Debug.Log("Recibiendo dmg reducido");
+            }
+            else
+            {
+                actualvida -= enmy2.atkbasDMG;
+            }
+        }
 
-        if (collider.gameObject.CompareTag("Golpe2")) actualvida -= enmy2.golpeDMG;
+        if (collider.gameObject.CompareTag("Golpe2"))
+        {
+            if (blck == true)
+            {
+                RecieveDmgWhenBlock(enmy2.golpeDMG);
+                cargasDeExplosion++;
+                Debug.Log("Recibiendo dmg reducido");
+            }
+            else
+            {
+                actualvida -= enmy2.golpeDMG;
+            }
+        }
 
-        if (collider.gameObject.CompareTag("Rafaga2")) actualvida -= enmy2.rafagaDMG; ;
-
+        if (collider.gameObject.CompareTag("Rafaga2"))
+        {
+            if (blck == true)
+            {
+                RecieveDmgWhenBlock(enmy2.rafagaDMG);
+                cargasDeExplosion++;
+                Debug.Log("Recibiendo dmg reducido");
+            }
+            else
+            {
+                actualvida -= enmy2.rafagaDMG;
+            }
+        }
     }
 
     /* private void OnTriggerExit(Collider collider)
-     {
-         if (collider.gameObject.CompareTag("RangoAtaqueEnemy1")) enmy.playerOnRange = false;
-
-     }*/
+    {
+        if (collider.gameObject.CompareTag("RangoAtaqueEnemy1")) enmy.playerOnRange = false;
+    }
+    */
 
     public void godmode()
     {
@@ -381,5 +545,24 @@ public class Player : MonoBehaviour
     public void crt()
     {
         SceneManager.LoadScene(2);
+    }
+
+    public void invocacionesEnemigos()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            Instantiate(BuscadorPrefab, transform.position + new Vector3(2, 0, 0), Quaternion.identity);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            Instantiate(VerdugoPrefab, transform.position + new Vector3(2,0,0), Quaternion.identity);
+        }
+    }
+
+    public void RecieveDmgWhenBlock(int dmg)
+    {
+        actualvida -= dmg * 0.25f;
+        actualvida = Mathf.Max(0, actualvida);
     }
 }

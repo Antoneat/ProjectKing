@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
     public StateManager SM;
 
     [Header("Vida")]
-    public int vida;
+    public float vida;
     public bool dead;
 
     [Header("AtaqueBasico")]
@@ -73,7 +73,7 @@ public class Enemy : MonoBehaviour
     public void ChooseAtk()
     {
         if (SM.ps == PlayerState.Normal || SM.ps == PlayerState.Stun || SM.ps == PlayerState.Sangrado)
-       {
+        {
             StartCoroutine(AtaqueBasico());
         }
         else if (SM.ps == PlayerState.Quemado)

@@ -25,6 +25,8 @@ public class enemyPatrol2 : MonoBehaviour
 
 		agent.autoBraking = false;
 
+
+		goal = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
 	}
 
 	void Update()

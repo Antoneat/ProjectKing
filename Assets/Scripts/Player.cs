@@ -549,12 +549,12 @@ public class Player : MonoBehaviour
 
     public void invocacionesEnemigos()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.B))
         {
             Instantiate(BuscadorPrefab, transform.position + new Vector3(2, 0, 0), Quaternion.identity);
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.V))
         {
             Instantiate(VerdugoPrefab, transform.position + new Vector3(2,0,0), Quaternion.identity);
         }

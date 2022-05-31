@@ -19,9 +19,9 @@ public class ConfigComandosCamara : MonoBehaviour
 
     void Start()
     {
-        textIntCamara[0].text = TransformCam.rotation.x.ToString();
-        textIntCamara[1].text = TransformCam.rotation.y.ToString();
-        textIntCamara[2].text = TransformCam.rotation.z.ToString();
+        textIntCamara[0].text = TransformCam.eulerAngles.x.ToString();
+        textIntCamara[1].text = TransformCam.eulerAngles.y.ToString();
+        textIntCamara[2].text = TransformCam.eulerAngles.z.ToString();
         textIntCamara[3].text = VirtualCamera.m_Lens.FieldOfView.ToString();
     }
 
@@ -40,7 +40,7 @@ public class ConfigComandosCamara : MonoBehaviour
         textIntCamara[0].text = posX;
 
 
-        TransformCam.eulerAngles.Set(posXNew,posYp, posZp);
+        TransformCam.eulerAngles = new Vector3(posXNew,posYp, posZp);
     }
 
     public void ChangePosY(string posY)
@@ -51,7 +51,7 @@ public class ConfigComandosCamara : MonoBehaviour
         //TransformCam.rotation.Equals(transform.rotation.y == posYNew);
         textIntCamara[1].text = posY;
 
-        TransformCam.eulerAngles.Set(posXp, posYNew, posZp);
+        TransformCam.eulerAngles = new Vector3(posXp, posYNew, posZp);
     }
 
     public void ChangePosZ(string posZ)
@@ -62,7 +62,7 @@ public class ConfigComandosCamara : MonoBehaviour
         //TransformCam.rotation.Equals(transform.rotation.z == posZNew);
         textIntCamara[2].text = posZ;
 
-        TransformCam.eulerAngles.Set(posXp, posYp, posZNew);
+        TransformCam.eulerAngles = new Vector3(posXp, posYp, posZNew);
     }
     public void ChangeFOVCamara(string FOVCamara)
     {

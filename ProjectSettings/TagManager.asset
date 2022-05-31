@@ -14,6 +14,10 @@ TagManager:
   - AtaqueNormalEnemy1
   - MordiscoEnemy1
   - FueraDelMundo
+  - Golpe2
+  - AtkBasicoE2
+  - Rafaga2
+  - Verdugo
   layers:
   - Default
   - TransparentFX

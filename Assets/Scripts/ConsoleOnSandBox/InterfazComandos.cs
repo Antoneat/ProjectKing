@@ -13,6 +13,7 @@ public class InterfazComandos : MonoBehaviour
     public GameObject PlayerConfigPanel;
     public GameObject EnemysConfigPanel;
     public GameObject CamaraConfigPanel;
+    public GameObject SelecLvlConfigPanel;
 
     [Header("ENEMIGOS PANEL")]
     public GameObject BuscadorConfigPanel;
@@ -39,11 +40,15 @@ public class InterfazComandos : MonoBehaviour
         {
             interfazComandos.SetActive(true);
             Time.timeScale = 0f;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
         else
         {
             interfazComandos.SetActive(false);
             Time.timeScale = 1f;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
     }
 
@@ -96,5 +101,18 @@ public class InterfazComandos : MonoBehaviour
     public void CloseCameraConfig()
     {
         CamaraConfigPanel.SetActive(false);
+    }
+    
+    /*////////////////////////////////////////////////////////////
+    SELECCIONADOR DE NIVELES
+    ////////////////////////////////////////////////////////////*/
+
+    public void OpenSelecLvlConfig()
+    {
+        SelecLvlConfigPanel.SetActive(true);
+    }
+    public void CloseSelecLvlConfig()
+    {
+        SelecLvlConfigPanel.SetActive(false);
     }
 }

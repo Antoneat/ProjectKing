@@ -387,7 +387,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plyr: {fileID: 0}
   SM: {fileID: 0}
-  vida: 10
+  vida: 12
   dead: 0
   ataqueNormalDMG: 5
   basicoGO: {fileID: 3749412668220788899}

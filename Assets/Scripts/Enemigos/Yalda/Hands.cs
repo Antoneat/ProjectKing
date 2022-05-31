@@ -9,14 +9,19 @@ public class Hands : MonoBehaviour
     public GameObject Hand1;
     public GameObject Hand2;
 
+    public GameObject portalA;
+    public GameObject portalB;
+    public GameObject portalC;
+    public GameObject portalD;
+
     public HandsPatrol hp;
     public HandsPatrol2 hp2;
 
     public float actualvida;
     public float maxVida=40;
 
-    public Transform teleport1;
-    public Transform teleport2;
+   // public Transform teleport1;
+    //public Transform teleport2;
 
     public Transform pointa;
     public Transform pointb;
@@ -33,6 +38,10 @@ public class Hands : MonoBehaviour
         actualvida = maxVida;
          vulnerable = false;
         loop = true;
+        portalA.SetActive(false);
+        portalB.SetActive(false);
+        portalC.SetActive(false);
+        portalD.SetActive(false);
     }
 
 
@@ -41,10 +50,18 @@ public class Hands : MonoBehaviour
         if(actualvida >=20)
         {
             Sequence1();
+            portalA.SetActive(false);
+            portalB.SetActive(false);
+            portalC.SetActive(false);
+            portalD.SetActive(false);
         }
         else if(actualvida <20)
         {
             Sequence2();
+            portalA.SetActive(true);
+            portalB.SetActive(true);
+            portalC.SetActive(true);
+            portalD.SetActive(true);
         }
     }
 
@@ -237,6 +254,7 @@ public class Hands : MonoBehaviour
             if (collider.gameObject.CompareTag("AtaqueCargado")) actualvida -= plyr.AttackDmgCargado; // Lo de arriba x4.
         }
 
-        
     }
+
+
 }

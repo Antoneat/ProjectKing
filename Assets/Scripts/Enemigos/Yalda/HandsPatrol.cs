@@ -7,6 +7,10 @@ public class HandsPatrol : MonoBehaviour
 
 	public Transform player;
 	public float Speed;
+	public Transform teleport;
+	public Transform teleport2;
+	public Transform teleport3;
+	public Transform teleport4;
 	//public float playerDistance;
 	//public float awareAI = 20f;
 	//public float damping = 6.0f;
@@ -62,6 +66,24 @@ public class HandsPatrol : MonoBehaviour
 	{
 
 		agent.destination = goal4.position;
+	}
+
+	private void OnTriggerEnter(Collider collider)
+	{
+
+
+		if (collider.gameObject.CompareTag("portalA"))
+		agent.Warp(teleport.position);
+
+		if (collider.gameObject.CompareTag("PortalB"))
+		agent.Warp(teleport2.position);
+
+		if (collider.gameObject.CompareTag("PortalC"))
+		agent.Warp(teleport3.position);
+
+		if (collider.gameObject.CompareTag("PortalD"))
+		agent.Warp(teleport4.position);
+
 	}
 
 }

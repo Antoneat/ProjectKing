@@ -19,6 +19,12 @@ TagManager:
   - Rafaga2
   - Verdugo
   - Walls
+  - onda
+  - manos
+  - portalA
+  - PortalB
+  - PortalC
+  - PortalD
   layers:
   - Default
   - TransparentFX

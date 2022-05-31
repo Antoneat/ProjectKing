@@ -26,11 +26,12 @@ public class Hands : MonoBehaviour
 
     public GameObject itemSp;
 
+    public bool vulnerable;
     void Start()
     {
         actualvida = maxVida;
-
-    }
+         vulnerable = false;
+}
 
 
     void Update()
@@ -66,7 +67,9 @@ public class Hands : MonoBehaviour
             hp.GotoNextPoint1();
             yield return new WaitForSecondsRealtime(4f);
             hp.GotoNextPoint2();
-            yield return new WaitForSecondsRealtime(4f);
+        vulnerable = true;
+        yield return new WaitForSecondsRealtime(4f);
+        vulnerable = false;
         yield break;
     }
 
@@ -76,7 +79,9 @@ public class Hands : MonoBehaviour
             hp2.GotoNextPoint1();
             yield return new WaitForSecondsRealtime(1f);
             hp2.GotoNextPoint2();
+        vulnerable = true;
         yield return new WaitForSecondsRealtime(4f);
+        vulnerable = false;
         yield break;
     }
 
@@ -86,7 +91,9 @@ public class Hands : MonoBehaviour
             hp2.GotoNextPoint3();
             yield return new WaitForSecondsRealtime(1f);
             hp2.GotoNextPoint4();
+        vulnerable = true;
         yield return new WaitForSecondsRealtime(4f);
+        vulnerable = false;
         yield break;
     }
 
@@ -97,7 +104,9 @@ public class Hands : MonoBehaviour
             hp.GotoNextPoint1();
             yield return new WaitForSecondsRealtime(1f);
             hp.GotoNextPoint2();
+        vulnerable = true;
         yield return new WaitForSecondsRealtime(4f);
+        vulnerable = false;
         yield break;
     }
 
@@ -107,8 +116,9 @@ public class Hands : MonoBehaviour
             hp.GotoNextPoint2();
             yield return new WaitForSecondsRealtime(1f);
             hp.GotoNextPoint1();
-
+        vulnerable = true;
         yield return new WaitForSecondsRealtime(4f);
+        vulnerable = false;
         yield break;
     }
 
@@ -119,7 +129,9 @@ public class Hands : MonoBehaviour
             hp.GotoNextPoint4();
             yield return new WaitForSecondsRealtime(1f);
             hp.GotoNextPoint3();
+        vulnerable = true;
         yield return new WaitForSecondsRealtime(4f);
+        vulnerable = false;
         yield break;
     }
 
@@ -128,12 +140,15 @@ public class Hands : MonoBehaviour
     IEnumerator Especial()
     {
         GotoPointA();
-        yield return new WaitForSecondsRealtime(3f);
+        yield return new WaitForSecondsRealtime(0.5f);
         GotoPointB();
         yield return new WaitForSecondsRealtime(0.5f);
         OndaExpansiva();
         yield return new WaitForSecondsRealtime(1.5f);
         Destroy(itemSp);
+        vulnerable = true;
+        yield return new WaitForSecondsRealtime(5f);
+        vulnerable = false;
         yield break;
     }
 
@@ -164,14 +179,17 @@ public class Hands : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
+        if (vulnerable ==true)
+        {
+            if (collider.gameObject.CompareTag("AtaqueUno")) actualvida -= plyr.AttackDmgUno; // Baja la vida del enemigo acorde con el valor que se puso en el ataque.
 
+            if (collider.gameObject.CompareTag("AtaqueDos")) actualvida -= plyr.AttackDmgDos; // Lo de arriba x2.
 
-        if (collider.gameObject.CompareTag("AtaqueUno")) actualvida -= plyr.AttackDmgUno; // Baja la vida del enemigo acorde con el valor que se puso en el ataque.
+            if (collider.gameObject.CompareTag("AtaqueTres")) actualvida -= plyr.AttackDmgTres; // Lo de arriba x3.
 
-        if (collider.gameObject.CompareTag("AtaqueDos")) actualvida -= plyr.AttackDmgDos; // Lo de arriba x2.
+            if (collider.gameObject.CompareTag("AtaqueCargado")) actualvida -= plyr.AttackDmgCargado; // Lo de arriba x4.
+        }
 
-        if (collider.gameObject.CompareTag("AtaqueTres")) actualvida -= plyr.AttackDmgTres; // Lo de arriba x3.
-
-        if (collider.gameObject.CompareTag("AtaqueCargado")) actualvida -= plyr.AttackDmgCargado; // Lo de arriba x4.
+        
     }
 }

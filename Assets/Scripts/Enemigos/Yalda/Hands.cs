@@ -27,39 +27,86 @@ public class Hands : MonoBehaviour
     public GameObject itemSp;
 
     public bool vulnerable;
+    bool loop;
     void Start()
     {
         actualvida = maxVida;
          vulnerable = false;
-}
+        loop = true;
+    }
 
 
     void Update()
     {
-        StartCoroutine(Seq());
+        if(actualvida >=20)
+        {
+            Sequence1();
+        }
+        else if(actualvida <20)
+        {
+            Sequence2();
+        }
     }
 
-    private void Sequence()
+    private void Sequence1()
     {
         StartCoroutine(Seq());
+    }
+    private void Sequence2()
+    {
+        StartCoroutine(Seq2());
     }
 
     private IEnumerator Seq()
     {
-        yield return StartCoroutine(Ataquebasico1());
-        yield return StartCoroutine(Ataquebasico2());
-        yield return StartCoroutine(Especial());
-        yield return StartCoroutine(Ataquebasico3());
-        yield return StartCoroutine(Ataquebasico4());
-        yield return StartCoroutine(Ataquebasico2());
-        yield return StartCoroutine(Especial());
-        yield return StartCoroutine(Ataquebasico1());
-        yield return StartCoroutine(Ataquebasico3());
-        yield return StartCoroutine(Ataquebasico5());
-        yield return StartCoroutine(Especial());
-        yield return StartCoroutine(Ataquebasico6());
+        while (loop ==true)
+        {
+                yield return StartCoroutine(Ataquebasico1());
+                yield return StartCoroutine(Ataquebasico2());
+                yield return StartCoroutine(Especial());
+                yield return StartCoroutine(Ataquebasico3());
+                yield return StartCoroutine(Ataquebasico4());
+                yield return StartCoroutine(Ataquebasico2());
+                yield return StartCoroutine(Especial());
+                yield return StartCoroutine(Ataquebasico1());
+                yield return StartCoroutine(Ataquebasico3());
+                yield return StartCoroutine(Ataquebasico5());
+                yield return StartCoroutine(Especial());
+                yield return StartCoroutine(Ataquebasico6());
+        }
 
     }
+    private IEnumerator Seq2()
+    {
+        while (loop == true)
+        {
+            yield return StartCoroutine(Ataquebasico1());
+            yield return new WaitForSecondsRealtime(0.7f);
+            yield return StartCoroutine(Ataquebasico2());
+            yield return new WaitForSecondsRealtime(0.7f);
+            yield return StartCoroutine(Especial());
+            yield return new WaitForSecondsRealtime(0.7f);
+            yield return StartCoroutine(Ataquebasico3());
+            yield return new WaitForSecondsRealtime(0.7f);
+            yield return StartCoroutine(Ataquebasico4());
+            yield return new WaitForSecondsRealtime(0.7f);
+            yield return StartCoroutine(Ataquebasico2());
+            yield return new WaitForSecondsRealtime(0.7f);
+            yield return StartCoroutine(Especial());
+            yield return new WaitForSecondsRealtime(0.7f);
+            yield return StartCoroutine(Ataquebasico1());
+            yield return new WaitForSecondsRealtime(0.7f);
+            yield return StartCoroutine(Ataquebasico3());
+            yield return new WaitForSecondsRealtime(0.7f);
+            yield return StartCoroutine(Ataquebasico5());
+            yield return new WaitForSecondsRealtime(0.7f);
+            yield return StartCoroutine(Especial());
+            yield return new WaitForSecondsRealtime(0.7f);
+            yield return StartCoroutine(Ataquebasico6());
+            yield return new WaitForSecondsRealtime(0.7f);
+        }
+    }
+
 
     IEnumerator Ataquebasico1()
     {

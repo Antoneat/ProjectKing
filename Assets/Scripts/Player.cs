@@ -414,11 +414,24 @@ public class Player : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("FueraDelMundo")) transform.position = new Vector3(0,0.7f,0);
+        if (collision.gameObject.CompareTag("manos"))
+        {
+
+            actualvida -= 4;
+
+        }
     }
 
     private void OnTriggerEnter(Collider collider)
     {
         // if (collider.gameObject.CompareTag("RangoAtaqueEnemy1")) enmy.playerOnRange = true;
+
+        if (collider.gameObject.CompareTag("onda"))
+        {
+
+                actualvida -= 6;
+
+        }
 
         if (collider.gameObject.CompareTag("AtaqueNormalEnemy1"))
         {

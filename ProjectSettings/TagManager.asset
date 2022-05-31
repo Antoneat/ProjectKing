@@ -18,6 +18,7 @@ TagManager:
   - AtkBasicoE2
   - Rafaga2
   - Verdugo
+  - Walls
   layers:
   - Default
   - TransparentFX

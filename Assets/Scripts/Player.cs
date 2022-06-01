@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
     public float dashCoolCounter;
 
     [Header("AtaqueCombo")]
-    [SerializeField] private int numberOfClicks = 0;
+    public int numberOfClicks = 0;
     private float lastClickedTime = 0;
     private float maxComboDelay = 0.8f;
     public int AttackDmgUno = 10;

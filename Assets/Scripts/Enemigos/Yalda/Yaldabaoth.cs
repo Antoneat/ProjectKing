@@ -6,144 +6,112 @@ public class Yaldabaoth : MonoBehaviour
 {
     public Player plyr;
     //public Rigidbody rb;
-    int layerMask = 1 << 3;
-    float smoothRot = 1f;
+   // int layerMask = 1 << 3;
+    //float smoothRot = 1f;
 
 
     [Header("Vida")]
-    [SerializeField] private int vidaYalda;
+    public float actualvida;
+    public float maxVida = 40;
 
-    [Header("Following")]
-    public float speed;
-    public Transform playerSeguir;
-    public bool playerOnRange;
+    [Header("AtaqueBasico")]
+    public float basico1DMG;
+    public GameObject basico1GO;
 
-    [Header("RangoDeAtaque")]
-    public GameObject rangoAtaque;
-    public bool atacando;
+    public float basico3DMG;
+    public GameObject basico3GO;
 
-    [Header("Ataque basico")]
-    [SerializeField] private float ataqueBasicoDMG;
-
-    [Header("Pasiva")]
-    //[SerializeField] private GameObject portales;
+    [Header("Especial")]
+    public float especialDMG;
+    public GameObject especialGO;
 
     [Header("AtaqueFinal")]
     public GameObject goA;
     public GameObject goB;
     public GameObject goC;
-      
+
+    public YaldaPatrol yp;
+
 
     void Start()
     {
-        playerSeguir = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-       // portales.SetActive(false);
+        plyr = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        basico1GO.SetActive(false);
+     //   basico2GO.SetActive(false);
+        basico3GO.SetActive(false);
+        especialGO.SetActive(false);
+        //.SetActive(false);
     }
 
     void Update()
     {
-        Following();
-        if (vidaYalda <= 50)
-        {
-            StopAllCoroutines();
-            StartCoroutine(ataqueFinal());
-            Pasiva();
-        }
+
     }
 
     void FixedUpdate()
     {
-        RaycastHit hit;
-        
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 5, layerMask))
-        {
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.green);
-            Debug.Log("Yalda esta a rango de Scarlet");
-            if (hit.collider.CompareTag("Player"))
-            {
-                atacando = true;
-            }
-        }
-        else
-        {
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 5, Color.red);
-            Debug.Log("Yalda NO esta a rango de Scarlet");
-        }
+
         
     }
 
-    private void Following()
+    /* private void Following()
+     {
+         if (atacando == false)
+         {
+             transform.position = Vector3.MoveTowards(transform.position, playerSeguir.transform.position, speed * Time.deltaTime);
+             transform.forward = playerSeguir.position - transform.position;
+             transform.rotation = Quaternion.Slerp(transform.rotation, playerSeguir.rotation, smoothRot * Time.deltaTime);
+         }
+         else if(atacando == true)
+         {
+             speed = 0;
+             Ataques();
+         }
+         /*
+         if (playerOnRange == true)
+         {
+             atacando = true;
+         }
+     }*/
+
+    public void ChooseAtk3()
     {
-        if (atacando == false)
+        if ((yp.playerDistance < yp.atkRange))
         {
-            transform.position = Vector3.MoveTowards(transform.position, playerSeguir.transform.position, speed * Time.deltaTime);
-            transform.forward = playerSeguir.position - transform.position;
-            transform.rotation = Quaternion.Slerp(transform.rotation, playerSeguir.rotation, smoothRot * Time.deltaTime);
+            StartCoroutine(ataqueBasico());
         }
-        else if(atacando == true)
+        else if (yp.playerDistance > yp.atkRange && yp.playerDistance < yp.awareAI)
         {
-            speed = 0;
-            Ataques();
+            StartCoroutine(especial());
         }
-        /*
-        if (playerOnRange == true)
+        else if (actualvida <= 20)
         {
-            atacando = true;
+            StartCoroutine(ataqueFinal());
         }
-        */
+
     }
 
-    public void Ataques()
+    IEnumerator ataqueBasico()
     {
-        if(atacando == true)
-        {
-            int numalea = Random.Range(1, 3);
-            switch (numalea)
-            {
-                case 1:
-                    StartCoroutine(ataquebasico());
-                    break;
-
-                case 2:
-                    StartCoroutine(especial());
-                    break;
-            }
-        }
-    }
-    IEnumerator ataquebasico()
-    {
-        if (vidaYalda > 50)
-        {
-            Debug.Log("ataquebasico SIN pasiva");
-            AtaqueBasicoSinPasiva();
-        }
-        else if (vidaYalda <= 50)
-        {
-            Debug.Log("ataquebasico CON pasiva");
-            AtaqueBasicoConPasiva();
-        }
-        yield return new WaitForSecondsRealtime(2f);
-        atacando = false;
-        speed = 1;
+        yield return new WaitForSecondsRealtime(0.5f);
+        basico1GO.SetActive(true);
+        yield return new WaitForSecondsRealtime(1.5f);
+        yp.agent.speed = 0;
+        basico1GO.SetActive(false);
+        basico3GO.SetActive(true);
+        yield return new WaitForSecondsRealtime(3f);
+        yp.agent.speed = 3;
+        basico3GO.SetActive(false);
         yield break;
     }
-
     IEnumerator especial()
-    { 
-        if (vidaYalda > 50)
-        {
-            Debug.Log("Especial SIN pasiva");
-            EspecialSinPasiva();
-        }
-        else if (vidaYalda <= 50)
-        {
-            Debug.Log("Especial CON pasiva");
-            EspecialConPasiva();
-        }
-        yield return new WaitForSecondsRealtime(2f);
-        atacando = false;
-        speed = 1;
-        yield break;
+    {
+        yp.agent.speed = 0;
+        yield return new WaitForSecondsRealtime(3f);
+        yp.agent.speed = 7;
+        yp.agent.destination = yp.goal.position;
+        yield return new WaitForSecondsRealtime(3f);
+
     }
 
     IEnumerator ataqueFinal()
@@ -152,27 +120,20 @@ public class Yaldabaoth : MonoBehaviour
         yield break;
     }
 
-    private void AtaqueBasicoSinPasiva()
-    {
-        // 
-    }
-    private void AtaqueBasicoConPasiva()
-    {
-        // 2 ataques normales consecutivos y dsp de 1.5s(? lanzar un ataque con mas dmg.
-    }
 
-    private void Pasiva()
-    {
-        //sportales.SetActive(true);
-    }
 
-    private void EspecialSinPasiva()
+    private void OnTriggerEnter(Collider collider)
     {
-        // 
-    }
-    private void EspecialConPasiva()
-    {
-        // Cuando el jugador esta lejos, carga un dash por 2s y se impulsa hacia la ultima posicion del player.
+       
+            if (collider.gameObject.CompareTag("AtaqueUno")) actualvida -= plyr.AttackDmgUno; // Baja la vida del enemigo acorde con el valor que se puso en el ataque.
+
+            if (collider.gameObject.CompareTag("AtaqueDos")) actualvida -= plyr.AttackDmgDos; // Lo de arriba x2.
+
+            if (collider.gameObject.CompareTag("AtaqueTres")) actualvida -= plyr.AttackDmgTres; // Lo de arriba x3.
+
+            if (collider.gameObject.CompareTag("AtaqueCargado")) actualvida -= plyr.AttackDmgCargado; // Lo de arriba x4.
+        
+
     }
 }
 

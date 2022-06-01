@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour
 {
     public Player plyr;
     public StateManager SM;
+    public enemyPatrol eP;
 
     [Header("Vida")]
     public float vida;
@@ -96,7 +97,9 @@ public class Enemy : MonoBehaviour
 
     IEnumerator AtaqueBasico()
     {
+        eP.agent.speed = 0;
         yield return new WaitForSecondsRealtime(1f);
+        eP.agent.speed = 3;
         basicoGO.SetActive(true);
         yield return new WaitForSecondsRealtime(2f);
         basicoGO.SetActive(false);
@@ -105,7 +108,9 @@ public class Enemy : MonoBehaviour
 
     IEnumerator Mordisco()
     {
+        eP.agent.speed = 0;
         yield return new WaitForSecondsRealtime(1.5f);
+        eP.agent.speed = 3;
         mordiscoGO.SetActive(true);
         SM.ps = PlayerState.Sangrado;
         yield return new WaitForSecondsRealtime(2f);

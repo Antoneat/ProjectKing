@@ -78,7 +78,9 @@ public class Enemy2 : MonoBehaviour
 
     IEnumerator AtaqueBasico()
     {
+        eP2.agent.speed = 0;
         yield return new WaitForSecondsRealtime(1.5f);
+        eP2.agent.speed = 3;
         atkbasGO.SetActive(true);
         yield return new WaitForSecondsRealtime(4f);
         atkbasGO.SetActive(false);
@@ -87,7 +89,7 @@ public class Enemy2 : MonoBehaviour
 
     IEnumerator GolpeAlPiso()
     {
-        yield return new WaitForSecondsRealtime(1f);
+       
         //wea q lo sigue 
         yield return new WaitForSecondsRealtime(3f);
         GameObject clone = Instantiate(golpeGO, playerpos, Quaternion.identity); 
@@ -100,11 +102,13 @@ public class Enemy2 : MonoBehaviour
 
     IEnumerator Rafaga()
     {
+        eP2.agent.speed = 0;
         yield return new WaitForSecondsRealtime(1f);
         float step = proyectileSpeed * Time.deltaTime; // calculate distance to move
         rafagaGO.transform.position = Vector3.MoveTowards(transform.position, playerpos, step);
         rafagaGO.SetActive(true);
         SM.ps = PlayerState.Quemado;
+        eP2.agent.speed = 3;
         yield return new WaitForSecondsRealtime(2f);
         rafagaGO.SetActive(false);
         yield break;

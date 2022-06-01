@@ -57,6 +57,7 @@ public class Player : MonoBehaviour
     [Header("Extra")]
     [SerializeField] private Enemy enmy;
     [SerializeField] private Enemy2 enmy2;
+    [SerializeField] private Yaldabaoth yp;
     [SerializeField] private int sceneId = 1;
     public TMP_Text vidapersonajeTxt;
     public TMP_Text dmgTxt;
@@ -434,6 +435,7 @@ public class Player : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("FueraDelMundo")) transform.position = new Vector3(0,0.7f,0);
+
         if (collision.gameObject.CompareTag("manos"))
         {
 
@@ -446,12 +448,7 @@ public class Player : MonoBehaviour
     {
         // if (collider.gameObject.CompareTag("RangoAtaqueEnemy1")) enmy.playerOnRange = true;
 
-        if (collider.gameObject.CompareTag("onda"))
-        {
-
-                actualvida -= 6;
-
-        }
+      
 
         if (collider.gameObject.CompareTag("AtaqueNormalEnemy1"))
         {
@@ -522,6 +519,30 @@ public class Player : MonoBehaviour
                 actualvida -= enmy2.rafagaDMG;
             }
         }
+
+        if (collider.gameObject.CompareTag("onda"))
+        {
+            actualvida -= 6;
+        }
+
+
+        if (collider.gameObject.CompareTag("basico1"))
+        {
+                actualvida -= yp.basico1DMG;
+        }
+
+
+        if (collider.gameObject.CompareTag("basico3"))
+        {
+            actualvida -= yp.basico3DMG;
+        }
+
+
+        if (collider.gameObject.CompareTag("especial"))
+        {
+            actualvida -= yp.especialDMG;
+        }
+
     }
 
     /* private void OnTriggerExit(Collider collider)

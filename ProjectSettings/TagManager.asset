@@ -25,6 +25,9 @@ TagManager:
   - PortalB
   - PortalC
   - PortalD
+  - especial
+  - basico1
+  - basico3
   layers:
   - Default
   - TransparentFX

@@ -228,12 +228,6 @@ public class Hands : MonoBehaviour
         yield break;
     }
 
-    IEnumerator Final()
-    {
-
-        yield break;
-    }
-
 
     public void GotoPointA()
     {

@@ -104,8 +104,8 @@ GameObject:
   - component: {fileID: 8230865892871844995}
   - component: {fileID: 8230865892871844994}
   - component: {fileID: 8230865892871844997}
-  - component: {fileID: 8230865892871844998}
-  - component: {fileID: 8230865892871844996}
+  - component: {fileID: 979409370336354545}
+  - component: {fileID: 8506037080635863092}
   m_Layer: 0
   m_Name: Verdugo
   m_TagString: Enemigo
@@ -184,7 +184,7 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &8230865892871844998
+--- !u!114 &979409370336354545
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -193,22 +193,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 8230865892871845001}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9321be915f4db3848ad6051758ab1bf9, type: 3}
+  m_Script: {fileID: 11500000, guid: 26db1bffdfa27a641a52fa9bd07ad5d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   plyr: {fileID: 0}
   SM: {fileID: 0}
-  eP2: {fileID: 8230865892871844996}
-  vida: 10
+  eP2: {fileID: 0}
+  vida: 0
   dead: 0
-  atkbasDMG: 5
-  atkbasGO: {fileID: 8230865892773146032}
-  golpeDMG: 7
-  golpeGO: {fileID: 8230865892233089720}
-  rafagaDMG: 10
-  rafagaGO: {fileID: 8230865893100228208}
+  atkbasDMG: 0
+  atkbasGO: {fileID: 0}
+  golpeDMG: 0
+  golpeGO: {fileID: 0}
+  rafagaDMG: 0
+  rafagaGO: {fileID: 0}
   knockbackStrength: 0
---- !u!114 &8230865892871844996
+--- !u!114 &8506037080635863092
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -217,17 +217,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 8230865892871845001}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2aeb254ecdd31e740b5b5505fa34974c, type: 3}
+  m_Script: {fileID: 11500000, guid: 2dbe56ed31b0d4c498798cc8e27de2e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 0
-  agent: {fileID: 8230865892871844997}
+  agent: {fileID: 0}
   destPoint: 0
   goal: {fileID: 0}
   playerDistance: 0
-  awareAI: 15
-  atkRange: 5
-  ee2: {fileID: 8230865892871844998}
+  awareAI: 0
+  atkRange: 0
+  ee2: {fileID: 0}
 --- !u!1 &8230865893100228208
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,29 +9,32 @@ public class Enemy2 : MonoBehaviour
     public StateManager SM;
     public enemyPatrol2 eP2;
 
+    public float proyectileSpeed = 4;
+
     [Header("Vida")]
     public float vida;
     public bool dead;
 
     [Header("AtaqueBasico")]
-    public int atkbasDMG;
+    public float atkbasDMG;
     public GameObject atkbasGO;
 
     [Header("GolpeAlPiso")]
-    public int golpeDMG;
+    public float golpeDMG;
     public GameObject golpeGO;
 
     [Header("Rafaga")]
-    public int rafagaDMG;
+    public float rafagaDMG;
     public GameObject rafagaGO;
 
     [Header("Extra")]
     [SerializeField] private float knockbackStrength;
+    public Vector3 playerpos;
 
     void Start()
     {
         plyr = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-
+       
         dead = false;
 
         atkbasGO.SetActive(false);
@@ -41,7 +44,9 @@ public class Enemy2 : MonoBehaviour
 
     void Update()
     {
+       
         Muerte();
+        playerpos = GameObject.FindGameObjectWithTag("Player").transform.position;
     }
 
     private void Muerte()
@@ -73,7 +78,7 @@ public class Enemy2 : MonoBehaviour
 
     IEnumerator AtaqueBasico()
     {
-        yield return new WaitForSecondsRealtime(1f);
+        yield return new WaitForSecondsRealtime(1.5f);
         atkbasGO.SetActive(true);
         yield return new WaitForSecondsRealtime(4f);
         atkbasGO.SetActive(false);
@@ -83,9 +88,12 @@ public class Enemy2 : MonoBehaviour
     IEnumerator GolpeAlPiso()
     {
         yield return new WaitForSecondsRealtime(1f);
+        //wea q lo sigue 
+        yield return new WaitForSecondsRealtime(3f);
+        GameObject clone = Instantiate(golpeGO, playerpos, Quaternion.identity); 
         golpeGO.SetActive(true);
         SM.ps = PlayerState.Quemado;
-        yield return new WaitForSecondsRealtime(2f);
+        yield return new WaitForSecondsRealtime(1f);
         golpeGO.SetActive(false);
         yield break;
     }
@@ -93,6 +101,8 @@ public class Enemy2 : MonoBehaviour
     IEnumerator Rafaga()
     {
         yield return new WaitForSecondsRealtime(1f);
+        float step = proyectileSpeed * Time.deltaTime; // calculate distance to move
+        rafagaGO.transform.position = Vector3.MoveTowards(transform.position, playerpos, step);
         rafagaGO.SetActive(true);
         SM.ps = PlayerState.Quemado;
         yield return new WaitForSecondsRealtime(2f);

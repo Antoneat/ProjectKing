@@ -12,11 +12,11 @@ public class Enemy : MonoBehaviour
     public bool dead;
 
     [Header("AtaqueBasico")]
-    public int ataqueNormalDMG;
+    public float ataqueNormalDMG;
     public GameObject basicoGO;
 
     [Header("Mordisco")]
-    public int mordiscoDMG;
+    public float mordiscoDMG;
     public GameObject mordiscoGO;
 
     [Header("Extra")]
@@ -105,7 +105,7 @@ public class Enemy : MonoBehaviour
 
     IEnumerator Mordisco()
     {
-        yield return new WaitForSecondsRealtime(1f);
+        yield return new WaitForSecondsRealtime(1.5f);
         mordiscoGO.SetActive(true);
         SM.ps = PlayerState.Sangrado;
         yield return new WaitForSecondsRealtime(2f);

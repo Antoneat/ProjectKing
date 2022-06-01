@@ -78,25 +78,6 @@ public class Hands : MonoBehaviour
     {
         while (loop ==true)
         {
-                yield return StartCoroutine(Ataquebasico1());
-                yield return StartCoroutine(Ataquebasico2());
-                yield return StartCoroutine(Especial());
-                yield return StartCoroutine(Ataquebasico3());
-                yield return StartCoroutine(Ataquebasico4());
-                yield return StartCoroutine(Ataquebasico2());
-                yield return StartCoroutine(Especial());
-                yield return StartCoroutine(Ataquebasico1());
-                yield return StartCoroutine(Ataquebasico3());
-                yield return StartCoroutine(Ataquebasico5());
-                yield return StartCoroutine(Especial());
-                yield return StartCoroutine(Ataquebasico6());
-        }
-
-    }
-    private IEnumerator Seq2()
-    {
-        while (loop == true)
-        {
             yield return StartCoroutine(Ataquebasico1());
             yield return new WaitForSecondsRealtime(0.7f);
             yield return StartCoroutine(Ataquebasico2());
@@ -121,6 +102,37 @@ public class Hands : MonoBehaviour
             yield return new WaitForSecondsRealtime(0.7f);
             yield return StartCoroutine(Ataquebasico6());
             yield return new WaitForSecondsRealtime(0.7f);
+        }
+
+    }
+    private IEnumerator Seq2()
+    {
+        while (loop == true)
+        {
+            yield return StartCoroutine(Ataquebasico1());
+            yield return new WaitForSecondsRealtime(1.7f);
+            yield return StartCoroutine(Ataquebasico2());
+            yield return new WaitForSecondsRealtime(1.7f);
+            yield return StartCoroutine(Especial());
+            yield return new WaitForSecondsRealtime(1.7f);
+            yield return StartCoroutine(Ataquebasico3());
+            yield return new WaitForSecondsRealtime(1.7f);
+            yield return StartCoroutine(Ataquebasico4());
+            yield return new WaitForSecondsRealtime(1.7f);
+            yield return StartCoroutine(Ataquebasico2());
+            yield return new WaitForSecondsRealtime(1.7f);
+            yield return StartCoroutine(Especial());
+            yield return new WaitForSecondsRealtime(1.7f);
+            yield return StartCoroutine(Ataquebasico1());
+            yield return new WaitForSecondsRealtime(1.7f);
+            yield return StartCoroutine(Ataquebasico3());
+            yield return new WaitForSecondsRealtime(1.7f);
+            yield return StartCoroutine(Ataquebasico5());
+            yield return new WaitForSecondsRealtime(1.7f);
+            yield return StartCoroutine(Especial());
+            yield return new WaitForSecondsRealtime(1.7f);
+            yield return StartCoroutine(Ataquebasico6());
+            yield return new WaitForSecondsRealtime(1.7f);
         }
     }
 
@@ -208,7 +220,7 @@ public class Hands : MonoBehaviour
         GotoPointB();
         yield return new WaitForSecondsRealtime(0.5f);
         OndaExpansiva();
-        yield return new WaitForSecondsRealtime(1.5f);
+        yield return new WaitForSecondsRealtime(1f);
         Destroy(itemSp);
         vulnerable = true;
         yield return new WaitForSecondsRealtime(5f);
@@ -238,7 +250,9 @@ public class Hands : MonoBehaviour
     void OndaExpansiva()
     {
         Vector3 pos = new Vector3(-1,1,0);
-        GameObject clone = Instantiate(itemSp, pos, Quaternion.identity);
+        Instantiate(itemSp, pos, Quaternion.identity);
+        Destroy(itemSp);
+
     }
 
     private void OnTriggerEnter(Collider collider)

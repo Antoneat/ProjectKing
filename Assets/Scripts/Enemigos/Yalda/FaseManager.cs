@@ -9,11 +9,13 @@ public class FaseManager : MonoBehaviour
     public GameObject Yaldabaoth;
     public GameObject Hands;
 
-    
+    public Player plyr;
+
     void Start()
     {
         Yaldabaoth.SetActive(false);
         Hands.SetActive(true);
+        plyr = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
   
@@ -31,24 +33,20 @@ public class FaseManager : MonoBehaviour
             Yaldabaoth.SetActive(true);
             StartCoroutine(HandsRegen());
         }
-        else if (h.actualvida > 0)
-        {
-            Yaldabaoth.SetActive(false);
-            Hands.SetActive(true);
-        }
-
-        if (y.actualvida <= 0)
+     
+        if (y.actualvida <= 0 && h.actualvida == h.maxVida)
         {
             Yaldabaoth.SetActive(false);
             Hands.SetActive(true);
             StartCoroutine(YaldaRegen());
         }
-        else if (y.actualvida > 0)
+        else if (y.actualvida <= 0 && h.actualvida < h.maxVida)
         {
-            Yaldabaoth.SetActive(true);
-            Hands.SetActive(false);
+            plyr.actualvida += 10;
+            Destroy(gameObject);
         }
     }
+
 
     IEnumerator HandsRegen()
     {

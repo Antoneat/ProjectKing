@@ -196,12 +196,12 @@ public class Player : MonoBehaviour
         if (attackCombo)
         {
             AttackCombo();
-            timePressed = 0.9f;
+            timePressed = 1f;
         }
 
         if (attackCharged){
             StartCoroutine(AttackingCharg());
-            timePressed = 0.9f;
+            timePressed = 1f;
         }
     }
 
@@ -329,6 +329,7 @@ public class Player : MonoBehaviour
             ataqueDos.SetActive(false);
             ataqueTres.SetActive(false);
             attackCooldown = 0.25f;
+            StartCoroutine(Slowness());
         }
 
         numberOfClicks = Mathf.Clamp(numberOfClicks, 0, 3);
@@ -342,6 +343,7 @@ public class Player : MonoBehaviour
             ataqueDos.SetActive(true);
             ataqueTres.SetActive(false);
             attackCooldown = 0.25f;
+            StartCoroutine(Slowness());
         }
 
         if (numberOfClicks == 3 && attackCooldown <= 0)
@@ -353,9 +355,25 @@ public class Player : MonoBehaviour
             ataqueDos.SetActive(false);
             ataqueTres.SetActive(true);
             attackCooldown = 0.25f;
-            numberOfClicks = 0;
+            StartCoroutine(Slowness());
+            StartCoroutine(RestartCombo());
         }
         attackCombo = false;
+    }
+
+    IEnumerator Slowness()
+    {
+        speed = 70;
+        yield return new WaitForSeconds(0.4f);
+        speed = 400;
+        yield break;
+    }
+
+    IEnumerator RestartCombo()
+    {
+        yield return new WaitForSeconds(1f);
+        numberOfClicks = 0;
+        yield break;
     }
 
     IEnumerator AttackingCharg()
@@ -374,6 +392,7 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.K))
         {
             blck = true;
+            //speed = 0;
             Debug.Log("Bloqueando1");
             //animacion de bloqueo
         }
@@ -383,7 +402,8 @@ public class Player : MonoBehaviour
             Debug.Log("Suelte de tecla2");
             // animacion de explosion
             StartCoroutine(DevolverDmg());
-            
+            //speed = 400;
+
         }
     }
 

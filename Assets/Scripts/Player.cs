@@ -593,7 +593,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void RecieveDmgWhenBlock(int dmg)
+    public void RecieveDmgWhenBlock(float dmg)
     {
         actualvida -= dmg * 0.25f;
         actualvida = Mathf.Max(0, actualvida);

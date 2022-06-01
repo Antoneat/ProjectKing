@@ -5,6 +5,7 @@ using UnityEngine;
 public class CamMovimiento : MonoBehaviour
 {
     public Transform[] views;
+    public GameObject[] luces;
 
     public float transitionSpeed;
 
@@ -19,27 +20,12 @@ public class CamMovimiento : MonoBehaviour
     
     void Update()
     {
-        /*if (Input.GetKeyDown(KeyCode.D))
-            {
-                currentView = views[2];
-            }
-        if(currentView == views[0])
-        {
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                currentView = views[5];
-            }
-
-            
-        }*/
 
         if (currentView == views[0])
         {
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                currentView = views[4];
-            }
-            else if (Input.GetKeyDown(KeyCode.D))
+            luces[0].SetActive(true);
+            luces[1].SetActive(false);
+            if (Input.GetKeyDown(KeyCode.D))
             {
                 currentView = views[1];
             }
@@ -47,11 +33,14 @@ public class CamMovimiento : MonoBehaviour
 
         if (currentView == views[1])
         {
+            luces[0].SetActive(false);
+            luces[1].SetActive(true);
             if (Input.GetKeyDown(KeyCode.A))
             {
                 currentView = views[0];
             }
-            else if (Input.GetKeyDown(KeyCode.D))
+            
+            if (Input.GetKeyDown(KeyCode.D))
             {
                 currentView = views[2];
             }
@@ -63,7 +52,8 @@ public class CamMovimiento : MonoBehaviour
             {
                 currentView = views[1];
             }
-            else if (Input.GetKeyDown(KeyCode.D))
+            
+            if (Input.GetKeyDown(KeyCode.D))
             {
                 currentView = views[3];
             }
@@ -75,7 +65,8 @@ public class CamMovimiento : MonoBehaviour
             {
                 currentView = views[2];
             }
-            else if (Input.GetKeyDown(KeyCode.D))
+            
+            if (Input.GetKeyDown(KeyCode.D))
             {
                 currentView = views[4];
             }
@@ -87,7 +78,8 @@ public class CamMovimiento : MonoBehaviour
             {
                 currentView = views[3];
             }
-            else if (Input.GetKeyDown(KeyCode.D))
+            
+            if (Input.GetKeyDown(KeyCode.D))
             {
                 currentView = views[1];
             }

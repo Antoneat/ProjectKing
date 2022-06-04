@@ -99,6 +99,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pared Piedrita
       objectReference: {fileID: 0}
+    - target: {fileID: 6614627543295990213, guid: 29145dff1b26d3342a7f05be5e4343d9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 71ea0b0550cf65b41a0b68db87f1a81b, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29145dff1b26d3342a7f05be5e4343d9, type: 3}
 --- !u!4 &7318536016690880011 stripped

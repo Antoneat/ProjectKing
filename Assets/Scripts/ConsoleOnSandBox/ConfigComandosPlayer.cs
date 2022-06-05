@@ -15,7 +15,6 @@ public class ConfigComandosPlayer : MonoBehaviour
     public BoxCollider[] boxColliders;
     public SphereCollider sphereCollider;
 
-
     void Start()
     {
         textIntPlayer[0].text = player.actualvida.ToString();

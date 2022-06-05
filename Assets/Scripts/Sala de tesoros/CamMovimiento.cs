@@ -25,13 +25,17 @@ public class CamMovimiento : MonoBehaviour
         {
             luces[0].SetActive(true);
             luces[1].SetActive(false);
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                currentView = views[4];
+            }
             if (Input.GetKeyDown(KeyCode.D))
             {
                 currentView = views[1];
             }
         }
 
-        if (currentView == views[1])
+        else if (currentView == views[1])
         {
             luces[0].SetActive(false);
             luces[1].SetActive(true);
@@ -46,7 +50,7 @@ public class CamMovimiento : MonoBehaviour
             }
         }
 
-        if (currentView == views[2])
+        else if (currentView == views[2])
         {
             if (Input.GetKeyDown(KeyCode.A))
             {
@@ -59,7 +63,7 @@ public class CamMovimiento : MonoBehaviour
             }
         }
 
-        if (currentView == views[3])
+        else if (currentView == views[3])
         {
             if (Input.GetKeyDown(KeyCode.A))
             {
@@ -72,7 +76,7 @@ public class CamMovimiento : MonoBehaviour
             }
         }
 
-        if (currentView == views[4])
+        else if (currentView == views[4])
         {
             if (Input.GetKeyDown(KeyCode.A))
             {
@@ -81,7 +85,7 @@ public class CamMovimiento : MonoBehaviour
             
             if (Input.GetKeyDown(KeyCode.D))
             {
-                currentView = views[1];
+                currentView = views[0];
             }
         }
     }

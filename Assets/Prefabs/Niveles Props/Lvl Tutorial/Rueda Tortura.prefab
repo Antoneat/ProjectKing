@@ -1,0 +1,127 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8796475261567192188
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8796475261567192189}
+  m_Layer: 0
+  m_Name: Rueda Tortura
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8796475261567192189
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8796475261567192188}
+  m_LocalRotation: {x: -0, y: 0.3348696, z: -0, w: 0.9422645}
+  m_LocalPosition: {x: -0.89, y: 2.4, z: 11.57}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 9050514343896952114}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 39.129, z: 0}
+--- !u!1001 &8796475263160634073
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 8796475261567192189}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 90cbcc25b2742694bbb7a71840475de2, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 90cbcc25b2742694bbb7a71840475de2, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.49181515
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 90cbcc25b2742694bbb7a71840475de2, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.49181515
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 90cbcc25b2742694bbb7a71840475de2, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.49181515
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 90cbcc25b2742694bbb7a71840475de2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.000000059605
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 90cbcc25b2742694bbb7a71840475de2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 90cbcc25b2742694bbb7a71840475de2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 90cbcc25b2742694bbb7a71840475de2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 90cbcc25b2742694bbb7a71840475de2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 90cbcc25b2742694bbb7a71840475de2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 90cbcc25b2742694bbb7a71840475de2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 90cbcc25b2742694bbb7a71840475de2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 90cbcc25b2742694bbb7a71840475de2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 90cbcc25b2742694bbb7a71840475de2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 90cbcc25b2742694bbb7a71840475de2, type: 3}
+      propertyPath: m_Name
+      value: Rueda de la tortura
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 90cbcc25b2742694bbb7a71840475de2, type: 3}
+--- !u!1 &8561961317735233416 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 90cbcc25b2742694bbb7a71840475de2, type: 3}
+  m_PrefabInstance: {fileID: 8796475263160634073}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &6255510644100210709
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8561961317735233416}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -3229758258643050976, guid: 90cbcc25b2742694bbb7a71840475de2, type: 3}
+--- !u!4 &9050514343896952114 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 90cbcc25b2742694bbb7a71840475de2, type: 3}
+  m_PrefabInstance: {fileID: 8796475263160634073}
+  m_PrefabAsset: {fileID: 0}

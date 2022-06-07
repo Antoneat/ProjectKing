@@ -21,6 +21,7 @@ public class ObjetosRompibles : MonoBehaviour
     {
         if (vida <= 0)
         {
+            plyr.almas += 10;
             Destroy(gameObject);
         }
     }

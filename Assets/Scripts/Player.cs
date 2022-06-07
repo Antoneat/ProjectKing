@@ -51,8 +51,13 @@ public class Player : MonoBehaviour
     public float bloqueoMaxDuracion;
     public bool blck;
     public int cargasDeExplosion;
+    public float bloqueoCooldown;
+    public float bloqueoCounter;
     public LayerMask enemyLayer;
 
+    [Header("Almas")]
+    public float almas;
+    public TMP_Text almasText;
 
     [Header("Extra")]
     [SerializeField] private Enemy enmy;
@@ -64,6 +69,7 @@ public class Player : MonoBehaviour
     int a = 0;
     int b = 0;
     public StateManager SM;
+    public bool closeToStair;
 
     [Header("VFX")]
     public GameObject ataqueUno;
@@ -89,8 +95,11 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         actualvida = maxVida;
+        almas = 0;
         blck = false;
         bloqueoDuracion = bloqueoMaxDuracion;
+
+        closeToStair = false;
 
         collecTxtGO.SetActive(false);
 
@@ -110,6 +119,8 @@ public class Player : MonoBehaviour
         vidapersonajeTxt.text = "Vida: " + actualvida.ToString();
 
         dmgTxt.text = "Daño: " + AttackDmgUno.ToString();
+
+        almasText.text = "Almas: " + almas.ToString();
 
         collecTxt.text = counterCollectables.ToString() + " / 5";
 
@@ -142,10 +153,16 @@ public class Player : MonoBehaviour
             }
         }
 
-        if(bloqueoDuracion > 0)
+        if(bloqueoDuracion > 0 && Input.GetKey(KeyCode.K))
         {
             bloqueoDuracion -= Time.deltaTime;
         }
+
+        if (bloqueoCounter <= bloqueoCooldown && blck == false)
+        {
+            bloqueoCounter -= Time.deltaTime;
+        }
+
 
 
         if(dashCoolCounter > 0)
@@ -202,9 +219,19 @@ public class Player : MonoBehaviour
             timePressed = 1f;
         }
 
-        if (attackCharged){
+        if (attackCharged)
+        {
             StartCoroutine(AttackingCharg());
             timePressed = 1f;
+        }
+        
+        if (closeToStair)
+        {
+            if (rb.velocity.y < 0)
+            {
+                Debug.Log("a");
+                rb.AddForce(Vector3.down, ForceMode.Impulse);
+            }
         }
     }
 
@@ -216,28 +243,31 @@ public class Player : MonoBehaviour
         if (dash == false) 
         {
             rb.velocity = new Vector3(horizontal * speed * Time.fixedDeltaTime, 0, vertical * speed * Time.fixedDeltaTime);
-            playerTransform.rotation = Quaternion.LookRotation(rb.velocity.normalized);
-            movement = new Vector3(0, 0, 0);
+            playerTransform.rotation = Quaternion.LookRotation(movement);
+            //movement = new Vector3(0, 0, 0);
         }
 
         if (horizontal > 0) //Dirección donde se mueve
         {
+            movement.z = 0;
             movement.x = 1;
         }
         else if (horizontal < 0)
         {
+            movement.z = 0;
             movement.x = -1;
         }
 
         if(vertical > 0)
         {
+            movement.x = 0;
             movement.z = 1;
         }
         else if (vertical < 0)
         {
+            movement.x = 0;
             movement.z = -1;
         }
-
 
         if (movement.x < 0) //Giro del sprite cuando mueve DERECHA o IZQUIERDA 
         {
@@ -247,7 +277,7 @@ public class Player : MonoBehaviour
         {
             spriteRenderer.flipX = true;
         }
-        
+        /*
         if(horizontal > 0)
         {
             ataqueUnoGO.transform.position = transform.position + new Vector3(2, 0, 0);
@@ -275,7 +305,7 @@ public class Player : MonoBehaviour
             ataqueDosGO.transform.position = transform.position + new Vector3(0, 0, -2);
             ataqueTresGO.transform.position = transform.position + new Vector3(0, 0, -2);
             ataqueCargGO.transform.position = transform.position + new Vector3(0, 0, -2);
-        }
+        }*/
     }
     
     IEnumerator Dash()
@@ -314,7 +344,7 @@ public class Player : MonoBehaviour
             rb.AddForce(new Vector3(-1, 0, -1) * speedDash, ForceMode.Impulse);
         }
 
-        movement = new Vector3(0, 0, 0);
+        //movement = new Vector3(0, 0, 0);
         yield return new WaitForSecondsRealtime(0.3f);
     }
     
@@ -392,27 +422,27 @@ public class Player : MonoBehaviour
 
     private void Blocking()
     {
-        if (Input.GetKey(KeyCode.K))
+        if (Input.GetKey(KeyCode.K) && bloqueoCounter <= 0)
         {
             blck = true;
-            //speed = 0;
+            speed = 0;
             Debug.Log("Bloqueando1");
             //animacion de bloqueo
         }
-        if (bloqueoDuracion <= 0 && Input.GetKeyUp(KeyCode.K) || cargasDeExplosion == 5)
+        if (bloqueoDuracion <= 0 || Input.GetKeyUp(KeyCode.K) || cargasDeExplosion == 5)
         {
             blck = false;
             Debug.Log("Suelte de tecla2");
             // animacion de explosion
             StartCoroutine(DevolverDmg());
-            //speed = 400;
-
+            bloqueoCounter = bloqueoCooldown;
+            speed = 400;
         }
     }
 
     IEnumerator DevolverDmg()
     {
-        Collider[] EnemiesInRange = Physics.OverlapSphere(transform.position, 3f, enemyLayer);
+        Collider[] EnemiesInRange = Physics.OverlapSphere(transform.position, 4f, enemyLayer);
         foreach (Collider enemyInRange in EnemiesInRange)
         {
             enemyInRange.GetComponent<Enemy>().vida -= cargasDeExplosion * 0.15f;
@@ -420,6 +450,7 @@ public class Player : MonoBehaviour
             Debug.Log("Devolviendo dmg a enemigos3");
         }
         bloqueoDuracion = bloqueoMaxDuracion;
+        cargasDeExplosion = 0;
         yield break;
     }
     private void OnDrawGizmos()

@@ -10048,12 +10048,13 @@ MonoBehaviour:
   bloqueoMaxDuracion: 4
   blck: 0
   cargasDeExplosion: 0
-  bloqueoCooldown: 0
+  bloqueoCooldown: 3
   bloqueoCounter: 0
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
   almas: 0
+  almasText: {fileID: 0}
   enmy: {fileID: 0}
   enmy2: {fileID: 0}
   yp: {fileID: 0}

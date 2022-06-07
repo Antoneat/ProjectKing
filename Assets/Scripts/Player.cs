@@ -229,8 +229,11 @@ public class Player : MonoBehaviour
         {
             if (rb.velocity.y < 0)
             {
-                Debug.Log("a");
-                rb.AddForce(Vector3.down, ForceMode.Impulse);
+                rb.AddForce(Vector3.down * 6f, ForceMode.Impulse);
+            }
+            if(rb.velocity.y >= 0)
+            {
+                speed = 800;
             }
         }
     }
@@ -481,8 +484,6 @@ public class Player : MonoBehaviour
     {
         // if (collider.gameObject.CompareTag("RangoAtaqueEnemy1")) enmy.playerOnRange = true;
 
-      
-
         if (collider.gameObject.CompareTag("AtaqueNormalEnemy1"))
         {
             if (blck == true)
@@ -564,24 +565,34 @@ public class Player : MonoBehaviour
             actualvida -= 6;
         }
 
-
         if (collider.gameObject.CompareTag("basico1"))
         {
                 actualvida -= yp.basico1DMG;
         }
-
 
         if (collider.gameObject.CompareTag("basico3"))
         {
             actualvida -= yp.basico3DMG;
         }
 
-
         if (collider.gameObject.CompareTag("especial"))
         {
             actualvida -= yp.especialDMG;
         }
 
+        if (collider.gameObject.CompareTag("Escalera"))
+        {
+            closeToStair = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Escalera"))
+        {
+            closeToStair = false;
+            speed = 400;
+        }
     }
 
     /* private void OnTriggerExit(Collider collider)

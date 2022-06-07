@@ -28,6 +28,7 @@ TagManager:
   - especial
   - basico1
   - basico3
+  - Escalera
   layers:
   - Default
   - TransparentFX

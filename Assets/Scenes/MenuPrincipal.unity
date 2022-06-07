@@ -3367,7 +3367,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sliderBrillo: {fileID: 1306196010}
   sliderBrilloValue: 0
-  simpleLUT: {fileID: 0}
+  simpleLUT: {fileID: 1773382696}
 --- !u!1 &1962310108
 GameObject:
   m_ObjectHideFlags: 0

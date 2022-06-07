@@ -245,7 +245,6 @@ public class Hands : MonoBehaviour
     {
         Vector3 pos = new Vector3(-1,1,0);
         Instantiate(itemSp, pos, Quaternion.identity);
-        Destroy(itemSp);
 
     }
 

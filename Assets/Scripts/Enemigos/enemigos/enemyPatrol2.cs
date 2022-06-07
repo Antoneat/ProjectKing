@@ -42,6 +42,7 @@ public class enemyPatrol2 : MonoBehaviour
 		else if (playerDistance > awareAI)
 		{
 			LookAtPlayer();
+			agent.speed = 0;
 		}
 
 
@@ -68,6 +69,7 @@ public class enemyPatrol2 : MonoBehaviour
 		transform.Translate(Vector3.forward * Speed * Time.deltaTime);
 		//agent.SetDestination(goal.transform.position);
 		agent.destination = goal.position;
+
 	}
 
 

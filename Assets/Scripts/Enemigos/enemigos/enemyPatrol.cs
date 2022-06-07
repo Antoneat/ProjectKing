@@ -42,6 +42,7 @@ public class enemyPatrol : MonoBehaviour
 		else if (playerDistance > awareAI)
 		{
 			LookAtPlayer();
+			agent.speed = 0;
 		}
 
 

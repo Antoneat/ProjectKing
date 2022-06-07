@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5545323129457847391}
   - component: {fileID: 5545323129457847390}
   - component: {fileID: 5545323129457847389}
+  - component: {fileID: 2462412320532636978}
   m_Layer: 0
   m_Name: Yalda
   m_TagString: Untagged
@@ -126,6 +127,28 @@ MonoBehaviour:
   goB: {fileID: 0}
   goC: {fileID: 0}
   yp: {fileID: 0}
+--- !u!195 &2462412320532636978
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5545323129457847387}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 2
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &5545323129478780251
 GameObject:
   m_ObjectHideFlags: 0
@@ -337,7 +360,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -368,6 +391,8 @@ MonoBehaviour:
   goal2: {fileID: 0}
   goal3: {fileID: 0}
   goal4: {fileID: 0}
+  h: {fileID: 0}
+  plyr: {fileID: 0}
 --- !u!1 &5545323129800581006
 GameObject:
   m_ObjectHideFlags: 0
@@ -418,6 +443,7 @@ MonoBehaviour:
   y: {fileID: 5545323129457847389}
   Yaldabaoth: {fileID: 5545323129457847387}
   Hands: {fileID: 5545323129906590073}
+  plyr: {fileID: 0}
 --- !u!1 &5545323129906590073
 GameObject:
   m_ObjectHideFlags: 0
@@ -430,7 +456,7 @@ GameObject:
   - component: {fileID: 5545323129906590076}
   m_Layer: 0
   m_Name: Hands
-  m_TagString: Untagged
+  m_TagString: manos
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1082,7 +1108,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -1113,6 +1139,8 @@ MonoBehaviour:
   goal2: {fileID: 0}
   goal3: {fileID: 0}
   goal4: {fileID: 0}
+  h: {fileID: 0}
+  plyr: {fileID: 0}
 --- !u!1 &5545323131326603403
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Enemy : MonoBehaviour
 {
@@ -15,10 +16,12 @@ public class Enemy : MonoBehaviour
     [Header("AtaqueBasico")]
     public float ataqueNormalDMG;
     public GameObject basicoGO;
+    public GameObject atkBTxt;
 
     [Header("Mordisco")]
     public float mordiscoDMG;
     public GameObject mordiscoGO;
+    public GameObject mordiscoTxt;
 
     [Header("Extra")]
     [SerializeField] private float knockbackStrength;
@@ -38,6 +41,9 @@ public class Enemy : MonoBehaviour
         dead = false;
         basicoGO.SetActive(false);
         mordiscoGO.SetActive(false);
+
+        atkBTxt.SetActive(false);
+        mordiscoTxt.SetActive(false);
     }
 
     void Update()
@@ -101,8 +107,10 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSecondsRealtime(1f);
         eP.agent.speed = 3;
         basicoGO.SetActive(true);
+        atkBTxt.SetActive(true);
         yield return new WaitForSecondsRealtime(2f);
         basicoGO.SetActive(false);
+        atkBTxt.SetActive(false);
         yield break;
     }
 
@@ -112,9 +120,11 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSecondsRealtime(1.5f);
         eP.agent.speed = 3;
         mordiscoGO.SetActive(true);
-        SM.ps = PlayerState.Sangrado;
+        mordiscoTxt.SetActive(true);
+        //SM.ps = PlayerState.Sangrado;
         yield return new WaitForSecondsRealtime(2f);
         mordiscoGO.SetActive(false);
+        mordiscoTxt.SetActive(false);
         yield break;
     }
 

@@ -176,7 +176,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -199,6 +199,7 @@ MonoBehaviour:
   plyr: {fileID: 0}
   SM: {fileID: 0}
   eP2: {fileID: 0}
+  proyectileSpeed: 4
   vida: 0
   dead: 0
   atkbasDMG: 0
@@ -208,6 +209,7 @@ MonoBehaviour:
   rafagaDMG: 0
   rafagaGO: {fileID: 0}
   knockbackStrength: 0
+  playerpos: {x: 0, y: 0, z: 0}
 --- !u!114 &8506037080635863092
 MonoBehaviour:
   m_ObjectHideFlags: 0

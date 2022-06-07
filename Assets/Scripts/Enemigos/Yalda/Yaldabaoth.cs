@@ -17,19 +17,22 @@ public class Yaldabaoth : MonoBehaviour
     [Header("AtaqueBasico")]
     public float basico1DMG;
     public GameObject basico1GO;
+    public GameObject basico1Txt;
 
     public float basico3DMG;
     public GameObject basico3GO;
+    public GameObject basico3Txt;
 
     [Header("Especial")]
     public float especialDMG;
     public GameObject especialGO;
+    public GameObject especialTxt;
 
-    [Header("AtaqueFinal")]
-    public GameObject goA;
-    public GameObject goB;
-    public GameObject goC;
-
+    /* [Header("AtaqueFinal")]
+     public GameObject goA;
+     public GameObject goB;
+     public GameObject goC;
+    */
     public YaldaPatrol yp;
 
 
@@ -37,10 +40,12 @@ public class Yaldabaoth : MonoBehaviour
     {
         plyr = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         basico1GO.SetActive(false);
-     //   basico2GO.SetActive(false);
         basico3GO.SetActive(false);
         especialGO.SetActive(false);
-        //.SetActive(false);
+
+        basico1Txt.SetActive(false);
+        basico3Txt.SetActive(false);
+        especialTxt.SetActive(false);
     }
 
     void Update()
@@ -95,23 +100,29 @@ public class Yaldabaoth : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(0.5f);
         basico1GO.SetActive(true);
+        basico1Txt.SetActive(true);
         yield return new WaitForSecondsRealtime(1.5f);
         yp.agent.speed = 0;
         basico1GO.SetActive(false);
         basico3GO.SetActive(true);
+        basico1Txt.SetActive(false);
+        basico3Txt.SetActive(true);
         yield return new WaitForSecondsRealtime(3f);
         yp.agent.speed = 3;
         basico3GO.SetActive(false);
+        basico3Txt.SetActive(false);
         yield break;
     }
     IEnumerator especial()
     {
+        especialTxt.SetActive(true);
         yp.agent.speed = 0;
         yield return new WaitForSecondsRealtime(3f);
         yp.agent.speed = 7;
         yp.agent.destination = yp.goal.position;
-        yield return new WaitForSecondsRealtime(3f);
 
+        yield return new WaitForSecondsRealtime(3f);
+        especialTxt.SetActive(false);
     }
 
     IEnumerator ataqueFinal()

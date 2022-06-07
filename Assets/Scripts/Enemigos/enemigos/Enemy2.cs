@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Enemy2 : MonoBehaviour
 {
@@ -18,14 +19,17 @@ public class Enemy2 : MonoBehaviour
     [Header("AtaqueBasico")]
     public float atkbasDMG;
     public GameObject atkbasGO;
+    public GameObject atkBTxt;
 
     [Header("GolpeAlPiso")]
     public float golpeDMG;
     public GameObject golpeGO;
+    public GameObject golpeTxt;
 
     [Header("Rafaga")]
     public float rafagaDMG;
     public GameObject rafagaGO;
+    public GameObject rafagaTxt;
 
     [Header("Extra")]
     [SerializeField] private float knockbackStrength;
@@ -40,6 +44,10 @@ public class Enemy2 : MonoBehaviour
         atkbasGO.SetActive(false);
         golpeGO.SetActive(false);
         rafagaGO.SetActive(false);
+
+        atkBTxt.SetActive(false);
+        golpeTxt.SetActive(false);
+        rafagaTxt.SetActive(false);    
     }
 
     void Update()
@@ -82,8 +90,10 @@ public class Enemy2 : MonoBehaviour
         yield return new WaitForSecondsRealtime(1.5f);
         eP2.agent.speed = 3;
         atkbasGO.SetActive(true);
+        atkBTxt.SetActive(true);
         yield return new WaitForSecondsRealtime(4f);
         atkbasGO.SetActive(false);
+        atkBTxt.SetActive(false);
         yield break;
     }
 
@@ -92,11 +102,14 @@ public class Enemy2 : MonoBehaviour
        
         //wea q lo sigue 
         yield return new WaitForSecondsRealtime(3f);
-        GameObject clone = Instantiate(golpeGO, playerpos, Quaternion.identity); 
+        //GameObject clone = Instantiate(golpeGO, playerpos, Quaternion.identity);
+        golpeGO.transform.position = playerpos;
         golpeGO.SetActive(true);
-        SM.ps = PlayerState.Quemado;
+        golpeTxt.SetActive(true);
+       // SM.ps = PlayerState.Quemado;
         yield return new WaitForSecondsRealtime(1f);
         golpeGO.SetActive(false);
+        golpeTxt.SetActive(false);
         yield break;
     }
 
@@ -104,13 +117,15 @@ public class Enemy2 : MonoBehaviour
     {
         eP2.agent.speed = 0;
         yield return new WaitForSecondsRealtime(1f);
+        rafagaGO.SetActive(true);
+        rafagaTxt.SetActive(true);
         float step = proyectileSpeed * Time.deltaTime; // calculate distance to move
         rafagaGO.transform.position = Vector3.MoveTowards(transform.position, playerpos, step);
-        rafagaGO.SetActive(true);
-        SM.ps = PlayerState.Quemado;
+        //SM.ps = PlayerState.Quemado;
         eP2.agent.speed = 3;
         yield return new WaitForSecondsRealtime(2f);
         rafagaGO.SetActive(false);
+        rafagaTxt.SetActive(false);
         yield break;
     }
 

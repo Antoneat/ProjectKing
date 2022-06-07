@@ -63,6 +63,7 @@ public class Player : MonoBehaviour
     public TMP_Text dmgTxt;
     int a = 0;
     int b = 0;
+    public StateManager SM;
 
     [Header("VFX")]
     public GameObject ataqueUno;
@@ -82,6 +83,7 @@ public class Player : MonoBehaviour
     //[SerializeField] private GameObject YaldaPrefab;
     //[SerializeField] private GameObject SamaelPrefab;
 
+  
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -470,10 +472,12 @@ public class Player : MonoBehaviour
             {
                 RecieveDmgWhenBlock(enmy.mordiscoDMG);
                 cargasDeExplosion++;
+                SM.ps = PlayerState.Sangrado;
                 Debug.Log("Recibiendo dmg reducido");
             }
             else
             {
+                SM.ps = PlayerState.Sangrado;
                 actualvida -= enmy.mordiscoDMG;
             }
         } 
@@ -498,10 +502,12 @@ public class Player : MonoBehaviour
             {
                 RecieveDmgWhenBlock(enmy2.golpeDMG);
                 cargasDeExplosion++;
+                SM.ps = PlayerState.Quemado;
                 Debug.Log("Recibiendo dmg reducido");
             }
             else
             {
+                SM.ps = PlayerState.Quemado;
                 actualvida -= enmy2.golpeDMG;
             }
         }
@@ -512,10 +518,12 @@ public class Player : MonoBehaviour
             {
                 RecieveDmgWhenBlock(enmy2.rafagaDMG);
                 cargasDeExplosion++;
+                SM.ps = PlayerState.Quemado;
                 Debug.Log("Recibiendo dmg reducido");
             }
             else
             {
+                SM.ps = PlayerState.Quemado;
                 actualvida -= enmy2.rafagaDMG;
             }
         }

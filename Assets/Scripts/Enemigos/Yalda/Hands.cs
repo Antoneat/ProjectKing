@@ -35,8 +35,9 @@ public class Hands : MonoBehaviour
     bool loop;
     void Start()
     {
+        itemSp.SetActive(false);
         actualvida = maxVida;
-         vulnerable = false;
+        vulnerable = false;
         loop = true;
         portalA.SetActive(false);
         portalB.SetActive(false);
@@ -103,7 +104,7 @@ public class Hands : MonoBehaviour
             yield return StartCoroutine(Ataquebasico6());
             yield return new WaitForSecondsRealtime(0.7f);
         }
-
+        yield return null;
     }
     private IEnumerator Seq2()
     {
@@ -134,6 +135,7 @@ public class Hands : MonoBehaviour
             yield return StartCoroutine(Ataquebasico6());
             yield return new WaitForSecondsRealtime(1.7f);
         }
+        yield return null;
     }
 
 
@@ -219,9 +221,9 @@ public class Hands : MonoBehaviour
         yield return new WaitForSecondsRealtime(0.5f);
         GotoPointB();
         yield return new WaitForSecondsRealtime(0.5f);
-        OndaExpansiva();
-        yield return new WaitForSecondsRealtime(1f);
-        Destroy(itemSp);
+        itemSp.SetActive(true);
+        yield return new WaitForSecondsRealtime(2f);
+        itemSp.SetActive(false);
         vulnerable = true;
         yield return new WaitForSecondsRealtime(5f);
         vulnerable = false;
@@ -241,12 +243,12 @@ public class Hands : MonoBehaviour
         hp2.agent.destination = pointd.position;
     }
 
-    void OndaExpansiva()
+   /* void OndaExpansiva()
     {
         Vector3 pos = new Vector3(-1,1,0);
         Instantiate(itemSp, pos, Quaternion.identity);
-
-    }
+        itemSp.SetActive(true);
+    }*/
 
     private void OnTriggerEnter(Collider collider)
     {

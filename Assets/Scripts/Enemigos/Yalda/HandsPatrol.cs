@@ -24,7 +24,9 @@ public class HandsPatrol : MonoBehaviour
 	public Transform goal3;
 	public Transform goal4;
 
+	public Hands h;
 
+	public Player plyr;
 	void Start()
 	{
 		UnityEngine.AI.NavMeshAgent agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
@@ -84,6 +86,16 @@ public class HandsPatrol : MonoBehaviour
 		if (collider.gameObject.CompareTag("PortalD"))
 		agent.Warp(teleport4.position);
 
+		if (h.vulnerable == true)
+		{
+			if (collider.gameObject.CompareTag("AtaqueUno")) h.actualvida -= plyr.AttackDmgUno; // Baja la vida del enemigo acorde con el valor que se puso en el ataque.
+
+			if (collider.gameObject.CompareTag("AtaqueDos")) h.actualvida -= plyr.AttackDmgDos; // Lo de arriba x2.
+
+			if (collider.gameObject.CompareTag("AtaqueTres")) h.actualvida -= plyr.AttackDmgTres; // Lo de arriba x3.
+
+			if (collider.gameObject.CompareTag("AtaqueCargado")) h.actualvida -= plyr.AttackDmgCargado; // Lo de arriba x4.
+		}
 	}
 
 }

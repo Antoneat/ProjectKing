@@ -42,6 +42,7 @@ public class YaldaPatrol : MonoBehaviour
 		else if (playerDistance > awareAI)
 		{
 			LookAtPlayer();
+			agent.speed = 0;
 		}
 
 
@@ -52,6 +53,7 @@ public class YaldaPatrol : MonoBehaviour
 		else if (playerDistance > atkRange)
 		{
 			LookAtPlayer();
+		
 		}
 	}
 
